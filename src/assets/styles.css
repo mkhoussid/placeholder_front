@@ -1,0 +1,27 @@
+@font-face {
+	font-family: 'NotoNormal';
+	src: url('./fonts/NotoSerifDisplay_light.ttf') format('truetype');
+	font-weight: 400;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'NotoNormalItalic';
+	src: url('./fonts/NotoSerifDisplay_light-italic.ttf') format('truetype');
+	font-weight: 400;
+	font-style: italic;
+}
+
+@font-face {
+	font-family: 'NotoBold';
+	src: url('./fonts/NotoSerifDisplay_bold.ttf') format('truetype');
+	font-weight: 600;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'NotoBoldItalic';
+	src: url('./fonts/NotoSerifDisplay_bold-italic.ttf') format('truetype');
+	font-weight: 600;
+	font-style: italic;
+}
