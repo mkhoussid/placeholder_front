@@ -1,0 +1,7 @@
+// Vitest Snapshot v1
+
+exports[`Link changes the class when hovered 1`] = `
+<button>
+  Hello
+</button>
+`;

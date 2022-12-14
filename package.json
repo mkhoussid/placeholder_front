@@ -4,11 +4,13 @@
 	"description": "",
 	"main": "index.js",
 	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1",
 		"dev": "vite",
 		"build": "tsc && vite build",
 		"preview": "vite preview",
-		"clear-cache": "git rm -r --cached ."
+		"clear-cache": "git rm -r --cached .",
+		"test": "vitest",
+		"test:ui": "vitest --ui",
+		"coverage": "vitest run --coverage"
 	},
 	"type": "module",
 	"repository": {
@@ -42,9 +44,13 @@
 		"@types/react-helmet": "^6.1.6",
 		"@typescript-eslint/parser": "^5.46.1",
 		"@vitejs/plugin-react": "^3.0.0",
+		"@vitest/ui": "^0.25.8",
 		"effector-logger": "^0.13.4",
 		"eslint": "^8.29.0",
+		"happy-dom": "^8.1.0",
+		"react-test-renderer": "^18.2.0",
 		"typescript": "^4.9.4",
-		"vite": "^4.0.1"
+		"vite": "^4.0.1",
+		"vitest": "^0.25.8"
 	}
 }
