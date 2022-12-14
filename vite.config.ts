@@ -9,7 +9,9 @@ export default defineConfig({
 		},
 	},
 	envPrefix: 'VITE',
-
+	server: {
+		port: 3030,
+	},
 	plugins: [
 		react({
 			babel: {
