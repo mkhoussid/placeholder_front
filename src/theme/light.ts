@@ -14,17 +14,15 @@ const light = {
 	background: {
 		main: '#e3e3e3',
 		light: '#ebf5fb',
-		contrast: '#2a2a36',
-		disabled: '#bfbfbf',
 	},
-	typography: {
-		main: '#1c1c25',
-		light: '#2a2a36',
-		contrast: '#e3e3e3',
-	},
-	footer: {
-		main: '#d7d4ed',
-	},
+	// typography: {
+	// 	main: '#1c1c25',
+	// 	light: '#2a2a36',
+	// 	contrast: '#e3e3e3',
+	// },
+	// footer: {
+	// 	main: '#d7d4ed',
+	// },
 	type: 'light',
 } as const;
 

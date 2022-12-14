@@ -8,7 +8,34 @@ export default defineConfig({
 			src: '/src',
 		},
 	},
-	plugins: [react()],
+	envPrefix: 'VITE',
+
+	plugins: [
+		react({
+			babel: {
+				presets: [],
+				plugins: [
+					// [
+					// 	'effector-logger/babel-plugin',
+					// 	{
+					// 		inspector: true,
+					// 		effector: {
+					// 			reactSsr: false,
+					// 			factories: [
+					// 				// 'shared/lib/effector-timer',
+					// 				// 'effector-forms',
+					// 			],
+					// 		},
+					// 	},
+					// ],
+				],
+				babelrc: true,
+				configFile: false,
+			},
+		}),
+	],
+
+	// "plugins": ["effector-logger/babel-plugin"]
 	// build: {
 	// 	sourcemap: false,
 	// 	emptyOutDir: true,

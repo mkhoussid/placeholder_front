@@ -45,7 +45,7 @@ export const httpClient = async <Result>({
 		'content-type': 'application/json',
 	},
 	onUploadProgress = () => undefined,
-	baseURL = 'http://localhost:5050',
+	baseURL = import.meta.env.VITE_API_ENDPOINT,
 	responseType,
 	withCredentials = true,
 }: TRequest): Promise<AxiosResponse<TResult<Result>>['data']> => {

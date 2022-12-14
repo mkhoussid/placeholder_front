@@ -1,48 +1,11 @@
+import { Theme } from '@emotion/react';
 import React from 'react';
-import { useSelector } from 'react-redux';
-import { IState } from 'src/redux/reducers';
-import common from './common';
+import { colors } from 'src/constants';
+import commonColors from './commonColors';
 import light from './light';
 
-export type ITheme = {
-	colors: {
-		primary: {
-			main: string;
-			light: string;
-		};
-		secondary: {
-			main: string;
-			light: string;
-		};
-		error: {
-			main: string;
-			light: string;
-		};
-		common: {
-			white: string;
-			black: string;
-			gray: string;
-			steel: string;
-		};
-		background: {
-			main: string;
-			light: string;
-			contrast: string;
-			disabled: string;
-		};
-		typography: {
-			main: string;
-			light: string;
-			contrast: string;
-		};
-		footer: {
-			main: string;
-		};
-		type: 'light';
-	};
-};
 type ThemeContext = {
-	theme: ITheme;
+	theme: Theme;
 	//  toggleTheme: () => void
 };
 
@@ -52,12 +15,11 @@ type TThemeProvider = {
 	children: React.ReactNode;
 };
 export const ThemeProvider = ({ children }: TThemeProvider) => {
-	const [theme, setTheme] = React.useState<ITheme>({ colors: { common, ...light } });
+	const [theme, setTheme] = React.useState<Theme>({ palette: { colors, ...commonColors, ...light } });
 
 	React.useEffect(() => {
-		const theme = { colors: { common, ...light } };
-
-		setTheme(theme);
+		// const theme = {  colors: { common, ...light } };
+		// setTheme(theme);
 	}, []);
 
 	// const toggleTheme = React.useCallback(() => {

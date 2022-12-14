@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { getTimeZone } from '../utils';
+import { getTimeZone } from 'src/utils';
 import countries from './countries';
 import timezones from './timezones';
 
@@ -16,8 +16,8 @@ const getLocation = (): TGetLocationResponse => {
 		return { country: null, state: null };
 	}
 
-	const _country = timezones[timezone].c[0];
-	const country = countries[_country];
+	const _country = timezones[timezone as keyof typeof timezones].c[0];
+	const country = countries[_country as keyof typeof countries];
 	const state = timezone.split('/')[1].replace('_', ' ');
 
 	return { country, state };

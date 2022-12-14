@@ -1,2 +1,2 @@
 export { default as Redirect } from './Redirect';
-export * from './uris';
+export { default as uris } from './uris';

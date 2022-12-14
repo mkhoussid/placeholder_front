@@ -1,9 +1,7 @@
 import * as React from 'react';
-import { useSelector } from 'react-redux';
 import { Redirect, uris } from 'src/router';
 import { useLocation } from 'react-router-dom';
-import { generatePath } from 'src/core/utils';
-import { IState } from 'src/redux/reducers';
+import { generatePath } from 'src/utils';
 
 interface PrivateRouteProps {
 	Component: React.FC;
@@ -13,7 +11,13 @@ const PrivateRoute: React.FC<PrivateRouteProps> = React.memo(({ Component }) => 
 
 	const { pathname } = useLocation();
 
-	if (!user) return <Redirect to={generatePath({ uri: uris.AUTH })} onAuthRedirectPath={pathname} />;
+	if (!user)
+		return (
+			<Redirect
+				to={generatePath({ uri: uris.AUTH.LOGIN })}
+				//onAuthRedirectPath={pathname}
+			/>
+		);
 
 	return <Component />;
 });

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { css, Global, Theme } from '@emotion/react';
-import { hexToRgba } from 'src/core/utils';
+import { hexToRgba } from 'src/utils';
 
 export default ({ theme }: { theme: Theme }) => (
 	<Global
@@ -31,7 +31,7 @@ export default ({ theme }: { theme: Theme }) => (
 			.rrt-warning {
 				&&& {
 					box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
-					${theme.colors.type === 'light'
+					${theme.palette.type === 'light'
 						? `
 						background: linear-gradient(125deg, ${hexToRgba('#a951ed', 0.6)}, ${hexToRgba('#02ccba', 0.4)});
 					`
@@ -54,7 +54,7 @@ export default ({ theme }: { theme: Theme }) => (
 			.rrt-info {
 				&&& {
 					box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
-					${theme.colors.type === 'light'
+					${theme.palette.type === 'light'
 						? `
 						background: linear-gradient(125deg, ${hexToRgba('#a951ed', 0.6)}, ${hexToRgba('#02ccba', 0.4)});
 					`
@@ -67,7 +67,7 @@ export default ({ theme }: { theme: Theme }) => (
 			.rrt-success {
 				&&& {
 					box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
-					${theme.colors.type === 'light'
+					${theme.palette.type === 'light'
 						? `
 						background: linear-gradient(125deg, ${hexToRgba('#a951ed', 0.6)}, ${hexToRgba('#02ccba', 0.4)});
 					`
@@ -80,7 +80,7 @@ export default ({ theme }: { theme: Theme }) => (
 			.rrt-error {
 				&&& {
 					box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
-					${theme.colors.type === 'light'
+					${theme.palette.type === 'light'
 						? `
 						background: linear-gradient(125deg, ${hexToRgba('#a951ed', 0.6)}, ${hexToRgba('#02ccba', 0.4)});
 					`

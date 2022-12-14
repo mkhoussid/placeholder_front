@@ -1,7 +1,5 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import { useSelector } from 'react-redux';
-import { IState } from 'src/redux/reducers';
 import { Outlet } from 'react-router-dom';
 import Error from './Error';
 import Header from './Header';
@@ -18,8 +16,7 @@ interface LayoutProps {
 	isMobile: boolean;
 }
 const Layout: React.FC<LayoutProps> = React.memo(({ isMobile }) => {
-	const pageError = useSelector((state: IState) => state.app.core.pageError);
-
+	const pageError = false;
 	return (
 		<RootLayout>
 			<Wrapper>
@@ -51,7 +48,7 @@ const RootLayout = styled.div`
 	${({ theme }) => `
 		height: 100%;
 		width: 100%;
-		// background-color: ${theme.colors.background.main};
+		background-color: ${theme.palette.background.main};
 	`}
 `;
 
@@ -80,7 +77,7 @@ const Middle = styled.div<{ isPageError: boolean }>`
 	${({ isPageError, theme }) => `
 	grid-column: 2 / 3;
 	width: 100%;
-	// background: ${theme.colors.background.main};
+	// background: ${theme.palette.background.main};
 	height: calc(100%);
 	margin-top: 0rem;
 	${

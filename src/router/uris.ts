@@ -1,3 +1,8 @@
-export const uris = {
+const uris = {
 	HOME: '/',
+	AUTH: {
+		LOGIN: '/login',
+	},
 };
+
+export default uris;

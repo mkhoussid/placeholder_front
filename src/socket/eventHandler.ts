@@ -1,16 +1,14 @@
-import { Dispatch } from 'redux';
 import events from './events';
 
 type TSocketEventHandlerClient = {
-	dispatch: Dispatch<any>;
 	event: string;
 	data?: { [key: string]: any };
 };
 
 const socketEventHandlerClient =
-	({ dispatch, event }: TSocketEventHandlerClient) =>
+	({ event }: TSocketEventHandlerClient) =>
 	(data?: any) => {
-		if (process.env.NODE_ENV !== 'production') {
+		if (import.meta.env.DEV) {
 			console.log('client event', event, data);
 		}
 

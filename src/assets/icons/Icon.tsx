@@ -42,7 +42,7 @@ const Container = styled((props) => <FlexContainer {...props} />)<{ disabledButt
 		transition: 0.3s ease-in-out;
 
 		&:hover {
-			${disabledButton ? '' : `background: ${theme.colors.common.steel};`}
+			${disabledButton ? '' : `background: ${theme.palette.common.steel};`}
 		}
 	`}
 `;

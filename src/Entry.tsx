@@ -10,7 +10,9 @@ const Entry = React.memo(() => {
 
 		if ((/\/\/m\./.test(site) && isMobile) || (!/\/\/m\./.test(site) && !isMobile)) return;
 
-		window.location.href = isMobile ? 'http://m.localhost:3030' : 'http://localhost:3030';
+		window.location.href = isMobile
+			? import.meta.env.VITE_CLIENT_PATH_MOBILE
+			: import.meta.env.VITE_CLIENT_PATH_DESKTOP;
 	}, [isMobile]);
 
 	return <App isMobile={isMobile} />;
