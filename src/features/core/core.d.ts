@@ -8,4 +8,17 @@ export namespace Core {
 		label: string;
 		uri: string;
 	};
+
+	type TextFieldName = {
+		NAME: string;
+		PLACEHOLDER: string;
+	};
+
+	type TextFieldNames = {
+		EMAIL_FIELD: TextFieldName;
+	};
+
+	export type Dictionary = {
+		textfieldNames: TextFieldNames;
+	} | null;
 }

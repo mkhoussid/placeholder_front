@@ -18,6 +18,7 @@ import 'src/assets/styles.css';
 import { useNavigateParams } from './hooks';
 import SandboxPage from './pages/Sandbox';
 import { Spinner } from './components/ui';
+import { Login } from './features/auth/components';
 
 const App = React.memo(() => {
 	const { theme } = React.useContext(ThemeContext);
@@ -42,16 +43,29 @@ const App = React.memo(() => {
 				<Spinner />
 			) : (
 				<Routes>
-					<Route path={uris.HOME} element={<Layout />}>
+					<Route path={uris.ROOT} element={<Layout />}>
+						<Route path={uris.AUTH.ROOT}>
+							<Route path={uris.AUTH.LOGIN} element={<Login />} />
+							<Route
+								path='*'
+								element={
+									<Redirect
+										to={generatePath({
+											uri: uris.AUTH.ROOT,
+										})}
+									/>
+								}
+							/>
+						</Route>
 						<Route path={uris.SANDBOX} element={<SandboxPage />} />
-						<Route path={uris.HOME} element={<Landing />} />
+						<Route path={uris.ROOT} element={<Landing />} />
 						<Route path={uris.ERROR} element={<Error />} />
 						<Route
 							path='*'
 							element={
 								<Redirect
 									to={generatePath({
-										uri: uris.HOME,
+										uri: uris.ROOT,
 									})}
 								/>
 							}

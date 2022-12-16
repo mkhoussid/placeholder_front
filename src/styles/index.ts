@@ -2,6 +2,8 @@ import { css } from '@emotion/react';
 
 export { default as GlobalStyles } from './GlobalStyles';
 
+export { default as InjectCssVars } from './InjectCssVars';
+
 export const removeElementHighlight = css`
 	-webkit-touch-callout: none;
 	-webkit-user-select: none;

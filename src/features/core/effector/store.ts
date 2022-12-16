@@ -9,6 +9,10 @@ export const $isMobile = createStore(false);
 
 export const $serverError = createStore<TServerErrorMatrixContent>(null);
 
+export const $dictionary = createStore<Core.Dictionary>(null, {
+	updateFilter: (dictionary) => !!dictionary,
+});
+
 export const $geolocation = createStore<Core.Geolocation>(
 	{
 		country: null,

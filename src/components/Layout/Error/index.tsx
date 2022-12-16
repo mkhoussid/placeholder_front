@@ -15,12 +15,12 @@ const Error = React.memo(() => {
 	const navigate = useNavigateParams();
 
 	const handleNavigateToHome = React.useCallback(() => {
-		navigate({ uri: uris.HOME });
+		navigate({ uri: uris.ROOT });
 		setServerError({ payload: { serverError: null } });
 	}, []);
 
 	if (!serverError) {
-		return <Redirect to={uris.HOME} />;
+		return <Redirect to={uris.ROOT} />;
 	}
 
 	return (

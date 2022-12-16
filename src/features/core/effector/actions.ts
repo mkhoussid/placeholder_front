@@ -1,4 +1,4 @@
-import { EMethodTypes, httpClient } from 'src/services/httpClient';
+import { createPostBody, EMethodTypes, httpClient } from 'src/services/httpClient';
 import getLocation from '../geolocation';
 import { createAndExecuteEffect, errorHandler, generateEndpointPath } from 'src/utils';
 import { initSocket } from 'src/socket';
@@ -10,13 +10,12 @@ import {
 	setInitLoadingEvent,
 	setIsMobileEvent,
 	setServerErrorEvent,
+	setDictionaryEvent,
 } from './events';
 import { Core } from '../core';
-import { createEffect } from 'effector';
 import { Auth } from 'src/features/auth/auth';
 import { ActionBase } from 'src/global';
 import { TServerErrorMatrixContent } from 'src/constants';
-import { $isMobile } from './store';
 
 export const setInitLoading = ({ payload: { initLoading } }: ActionBase<{ initLoading: boolean }>) => {
 	setInitLoadingEvent(initLoading);
@@ -34,6 +33,10 @@ export const setHeaderLinks = ({ payload: { headerLinks } }: ActionBase<{ header
 	setHeaderLinksEvent(headerLinks);
 };
 
+export const setDictionary = ({ payload: { dictionary } }: ActionBase<{ dictionary: Core.Dictionary }>) => {
+	setDictionaryEvent(dictionary);
+};
+
 export const setServerError = ({
 	payload: { serverError },
 }: ActionBase<{ serverError: TServerErrorMatrixContent }>) => {
@@ -48,10 +51,18 @@ export const init = async () => {
 				httpClient({
 					url: generateEndpointPath({ path: apis.INIT.ROOT }),
 					method: EMethodTypes.POST,
+					body: createPostBody({ language: window.navigator.language }),
 				}),
 			watchers: {
-				doneDataWatcher: ({ user }: { user: Auth.User }) => {
+				doneDataWatcher: ({
+					user,
+					dictionary,
+				}: {
+					user: Auth.User;
+					dictionary: Core.Dictionary;
+				}) => {
 					setUser({ payload: { user } });
+					setDictionary({ payload: { dictionary } });
 				},
 				finallyWatcher: (res) => {
 					console.log('res', res);

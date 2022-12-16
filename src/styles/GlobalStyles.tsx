@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { css, Global, Theme } from '@emotion/react';
 import { hexToRgba } from 'src/utils';
 

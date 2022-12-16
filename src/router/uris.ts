@@ -1,8 +1,9 @@
 const uris = {
 	ERROR: '/error',
-	HOME: '/',
+	ROOT: '/',
 	AUTH: {
-		LOGIN: '/login',
+		ROOT: '/auth',
+		LOGIN: '/auth/login',
 	},
 	SANDBOX: '/sandbox',
 };

@@ -63,7 +63,7 @@ const Part = styled.div`
 const HeaderWrapper = styled(Part)``;
 
 const BodyWrapper = styled(Part)`
-	height: calc(100% + ${HEADER_HEIGHT_IN_REM}rem);
+	height: 100%;
 `;
 
 const FooterWrapper = styled(Part)``;

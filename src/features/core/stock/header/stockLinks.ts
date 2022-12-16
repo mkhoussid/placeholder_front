@@ -3,7 +3,7 @@ import { Core } from '../../core';
 const stockLinks: Core.HeaderLink[] = [
 	{
 		label: 'Вход',
-		uri: '/login',
+		uri: '/auth/login',
 	},
 	{
 		label: 'О нас',

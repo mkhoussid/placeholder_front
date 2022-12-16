@@ -1,7 +1,7 @@
 import { TServerErrorMatrixContent } from 'src/constants';
 import { eventFactory, watchHelper } from 'src/utils';
 import { Core } from '../core';
-import { $geolocation, $headerLinks, $initLoading, $isMobile, $serverError } from './store';
+import { $geolocation, $headerLinks, $initLoading, $isMobile, $serverError, $dictionary } from './store';
 
 export const setInitLoadingEvent = eventFactory<boolean>({
 	storeElement: $initLoading,
@@ -21,6 +21,10 @@ export const setServerErrorEvent = eventFactory<TServerErrorMatrixContent>({
 
 export const setHeaderLinksEvent = eventFactory<Core.HeaderLink[]>({
 	storeElement: $headerLinks,
+});
+
+export const setDictionaryEvent = eventFactory<Core.Dictionary>({
+	storeElement: $dictionary,
 });
 
 watchHelper({
@@ -46,4 +50,10 @@ watchHelper({
 watchHelper({
 	storeElement: $headerLinks,
 	name: '$headerLinks',
+});
+
+watchHelper({
+	storeElement: $dictionary,
+	name: '$dictionary',
+	print: true,
 });
