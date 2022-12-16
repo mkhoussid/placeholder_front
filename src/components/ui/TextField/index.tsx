@@ -1,6 +1,8 @@
 import * as React from 'react';
 import clsx from 'clsx';
 import styled from '@emotion/styled';
+import { useStore } from 'effector-react';
+import { $requestLoading } from 'src/features/core/effector/store';
 
 type TextFieldProps = {
 	containerProps?: React.HTMLAttributes<HTMLDivElement>;
@@ -8,6 +10,8 @@ type TextFieldProps = {
 	name: string;
 	adornmentContent?: React.ReactNode;
 	adornmentPlacement?: 'left' | 'right';
+	value: string;
+	disabled?: boolean;
 } & Omit<React.HTMLAttributes<HTMLInputElement>, 'name'>;
 const TextField = React.memo(
 	({
@@ -17,8 +21,11 @@ const TextField = React.memo(
 		gutterBottom = false,
 		adornmentContent = null,
 		adornmentPlacement = 'left',
+		disabled,
 		...props
 	}: TextFieldProps) => {
+		const requestLoading = useStore($requestLoading);
+
 		if (!name) {
 			throw new Error(`Property \`name\` was not provided`);
 		}
@@ -28,7 +35,12 @@ const TextField = React.memo(
 		return (
 			<Container gutterBottom={gutterBottom} {...props}>
 				{adornmentPlacement === 'left' && adornment}
-				<Input name={name} className={clsx('form-field', className)} {...props} />
+				<Input
+					name={name}
+					className={clsx('form-field', className)}
+					disabled={requestLoading || disabled}
+					{...props}
+				/>
 				{adornmentPlacement === 'right' && adornment}
 			</Container>
 		);
@@ -38,7 +50,7 @@ const TextField = React.memo(
 export default TextField;
 
 const Container = styled.div<{ gutterBottom: boolean }>`
-	${({ gutterBottom }) => `
+	${({ gutterBottom, theme }) => `
         margin-bottom: ${gutterBottom ? 1 : 0}rem;
 
         --input-color: #99a3ba;
@@ -99,6 +111,10 @@ const Container = styled.div<{ gutterBottom: boolean }>`
                 color: var(--group-color-focus);
                 background: var(--group-background-focus);
                 border-color: var(--group-border-focus);
+
+                path {
+                    fill: ${theme.palette.common.white};
+                }
             }
         }
     `}

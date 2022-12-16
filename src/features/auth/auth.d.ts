@@ -3,6 +3,11 @@ export namespace Auth {
 		name: string;
 	} | null;
 
+	export type FormValues = {
+		login: string;
+		password: string;
+	};
+
 	// export type MyMap<T> = {
 	//   [key: string]: T;
 	// }

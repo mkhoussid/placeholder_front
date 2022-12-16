@@ -2,7 +2,7 @@ import * as React from 'react';
 import styled from '@emotion/styled';
 import Typography, { ETypographySize, ETypographyVariant } from '../Typography';
 import { useStore } from 'effector-react';
-import { $isMobile } from 'src/features/core/effector/store';
+import { $isMobile, $requestLoading } from 'src/features/core/effector/store';
 
 type ButtonProps = {
 	text: string;
@@ -12,16 +12,22 @@ type ButtonProps = {
 const Button = React.memo(
 	({ text, onClick, variant = ETypographyVariant.WHITE, size = ETypographySize.LG, ...props }: ButtonProps) => {
 		const isMobile = useStore($isMobile);
+		const requestLoading = useStore($requestLoading);
 
-		const handleClick = React.useCallback((e: React.MouseEvent<HTMLDivElement>) => {
-			e.stopPropagation();
+		const handleClick = React.useCallback(
+			(e: React.MouseEvent<HTMLDivElement>) => {
+				e.stopPropagation();
 
-			onClick?.(e);
-		}, []);
+				if (requestLoading) return;
+
+				onClick?.(e);
+			},
+			[requestLoading],
+		);
 
 		return (
 			<Container onClick={handleClick} isMobile={isMobile} {...props}>
-				<Typography variant={variant} size={size}>
+				<Typography variant={variant} size={size} containerProps={{ placement: 'center' }}>
 					{text}
 				</Typography>
 			</Container>
@@ -32,7 +38,7 @@ const Button = React.memo(
 export default Button;
 
 const Container = styled.div<{ isMobile: boolean }>`
-	${({ theme, isMobile }) => `
+	${({ isMobile }) => `
 		height: auto;
 		text-align: center;
 		width: auto;

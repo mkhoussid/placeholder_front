@@ -8,6 +8,7 @@ import {
 	setGeolocationEvent,
 	setHeaderLinksEvent,
 	setInitLoadingEvent,
+	setRequestLoadingEvent,
 	setIsMobileEvent,
 	setServerErrorEvent,
 	setDictionaryEvent,
@@ -19,6 +20,10 @@ import { TServerErrorMatrixContent } from 'src/constants';
 
 export const setInitLoading = ({ payload: { initLoading } }: ActionBase<{ initLoading: boolean }>) => {
 	setInitLoadingEvent(initLoading);
+};
+
+export const setRequestLoading = ({ payload: { requestLoading } }: ActionBase<{ requestLoading: boolean }>) => {
+	setRequestLoadingEvent(requestLoading);
 };
 
 export const setIsMobile = ({ payload: { isMobile } }: ActionBase<{ isMobile: boolean }>) => {

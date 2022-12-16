@@ -4,6 +4,8 @@ import { Core } from '../core';
 
 export const $initLoading = createStore(true);
 
+export const $requestLoading = createStore(false);
+
 export const $isMobile = createStore(false);
 
 export const $serverError = createStore<TServerErrorMatrixContent>(null);

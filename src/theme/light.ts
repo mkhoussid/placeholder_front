@@ -13,7 +13,7 @@ const light = {
 	},
 	background: {
 		main: '#394A55',
-		light: '#394A55',
+		light: '#6c7f8c',
 	},
 	// typography: {
 	// 	main: '#1c1c25',
