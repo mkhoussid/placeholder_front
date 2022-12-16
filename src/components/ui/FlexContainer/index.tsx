@@ -9,7 +9,7 @@ export enum EPlacement {
 
 export type TFlexPlacement = 'start' | 'center' | 'end';
 
-type TFlexContainer = {
+export type TFlexContainer = {
 	className?: string;
 	placement?: TFlexPlacement;
 	fullHeightAndWidth?: boolean;

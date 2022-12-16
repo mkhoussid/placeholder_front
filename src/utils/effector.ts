@@ -1,4 +1,6 @@
-import { createEffect, createEvent, Effect, Event, Store } from 'effector';
+import { createEffect, createEvent, Event, Store } from 'effector';
+import { Auth } from 'src/features/auth/auth';
+import { EffectWatchers } from 'src/global';
 
 type TWatchHelper = {
 	name?: string;
@@ -34,10 +36,32 @@ export const eventFactory = <T>({ storeElement }: TEventFactory): Event<T> => {
 };
 
 type TCreateAndExecuteEffect = {
-	handler: () => any;
+	prehandler: () => void;
+	handler: () => void;
+	watchers?: EffectWatchers;
 };
-export const createAndExecuteEffect = async <T>({ handler }: TCreateAndExecuteEffect): Promise<T> => {
+export const createAndExecuteEffect = async ({ handler, watchers = {} }: TCreateAndExecuteEffect): Promise<void> => {
 	const effect = createEffect(handler);
+
+	if (watchers.doneWatcher) {
+		effect.done.watch(watchers.doneWatcher);
+	}
+
+	if (watchers.doneDataWatcher) {
+		effect.doneData.watch(watchers.doneDataWatcher);
+	}
+
+	if (watchers.failWatcher) {
+		effect.fail.watch(watchers.failWatcher);
+	}
+
+	if (watchers.failDataWatcher) {
+		effect.fail.watch(watchers.failDataWatcher);
+	}
+
+	if (watchers.finallyWatcher) {
+		effect.finally.watch(watchers.finallyWatcher);
+	}
 
 	return effect();
 };

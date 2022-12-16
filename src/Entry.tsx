@@ -3,7 +3,7 @@ import App from './App';
 import { useMediaQuery } from './hooks';
 
 const Entry = React.memo(() => {
-	const isMobile = useMediaQuery('(max-width: 700px)');
+	const isMobile = useMediaQuery(`(max-width: ${import.meta.env.VITE_MAX_WIDTH}px)`);
 
 	React.useEffect(() => {
 		const site = window.location.href;

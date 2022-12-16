@@ -1,3 +1,6 @@
+import { serverErrorMatrix } from 'src/constants';
+import { setServerError } from 'src/features/core/effector/actions';
+
 type TErrorHhandler = {
 	payload: {
 		err: any;
@@ -5,6 +8,15 @@ type TErrorHhandler = {
 	};
 };
 const errorHandler = ({ payload: { err = null, redirect = false } }: TErrorHhandler) => {
+	const serverErrorCode: number | undefined = err?.response?.data?.serverErrorCode;
+
+	console.log('serverErrorCode', serverErrorCode);
+	if (serverErrorCode) {
+		if (!serverErrorMatrix[serverErrorCode]) {
+			console.warn(`Provided server error code \`${serverErrorCode}\` was not recognized`);
+		}
+		setServerError({ payload: { serverError: serverErrorMatrix[serverErrorCode] } });
+	}
 	// const isAuthenticationError = err?.response?.status === 403 || err?.response?.status === 401;
 	// if (redirect || isAuthenticationError) {
 	// 	window.location.replace('/');

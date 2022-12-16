@@ -4,10 +4,12 @@ import { createAndExecuteEffect, errorHandler, generateEndpointPath } from 'src/
 import { initSocket } from 'src/socket';
 import { setUser } from 'src/features/auth/effector/actions';
 import apis from 'src/router/apis';
-import { setGeolocationEvent, setInitLoadingEvent } from './events';
+import { setGeolocationEvent, setInitLoadingEvent, setServerErrorEvent } from './events';
 import { Core } from '../core';
 import { createEffect } from 'effector';
 import { Auth } from 'src/features/auth/auth';
+import { ActionBase } from 'src/global';
+import { TServerErrorMatrixContent } from 'src/constants';
 
 type TSetInitLoading = {
 	payload: {
@@ -18,35 +20,37 @@ export const setInitLoading = ({ payload: { initLoading } }: TSetInitLoading) =>
 	setInitLoadingEvent(initLoading);
 };
 
-type TSetGeolocation = {
-	payload: {
-		geolocation: Core.Geolocation;
-	};
-};
-export const setGeolocation = ({ payload: { geolocation } }: TSetGeolocation) => {
+export const setGeolocation = ({ payload: { geolocation } }: ActionBase<{ geolocation: Core.Geolocation }>) => {
 	setGeolocationEvent(geolocation);
 };
 
-type TInit = {
-	payload: {
-		isMobile: boolean;
-	};
+export const setServerError = ({
+	payload: { serverError },
+}: ActionBase<{ serverError: TServerErrorMatrixContent }>) => {
+	setServerErrorEvent(serverError);
 };
-export const init = async ({ payload: { isMobile } }: TInit) => {
-	try {
-		setInitLoading({ payload: { initLoading: true } });
 
-		const { user } = await createAndExecuteEffect<{ user: Auth.User }>({
-			handler: () =>
+export const init = async ({ payload: { isMobile }, watchers }: ActionBase<{ isMobile: boolean }>) => {
+	try {
+		await createAndExecuteEffect({
+			prehandler: () => setInitLoading({ payload: { initLoading: true } }),
+			handler: async () =>
 				httpClient({
 					url: generateEndpointPath({ path: apis.INIT.ROOT }),
 					method: EMethodTypes.POST,
 				}),
+			watchers: {
+				doneDataWatcher: ({ user }: { user: Auth.User }) => {
+					setUser({ payload: { user } });
+				},
+				finallyWatcher: (result) => {
+					console.log('result', result);
+				},
+			},
 		});
 
 		const { country, state } = getLocation();
 
-		setUser({ payload: { user } });
 		setGeolocation({ payload: { geolocation: { country, state } } });
 
 		initSocket();

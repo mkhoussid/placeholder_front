@@ -11,7 +11,12 @@ import PrivateRoute from './router/PrivateRoute';
 import Suspense from './components/Suspense';
 import { GlobalStyles } from './styles';
 import { useStore } from 'effector-react';
-import { $initLoading } from './features/core/effector/store';
+import { $initLoading, $serverError } from './features/core/effector/store';
+import Error from './components/Layout/Error';
+
+import 'src/assets/styles.css';
+import { useNavigateParams } from './hooks';
+import SandboxPage from './pages/Sandbox';
 
 interface AppProps {
 	isMobile: boolean;
@@ -19,10 +24,18 @@ interface AppProps {
 const App: React.FC<AppProps> = React.memo(({ isMobile }) => {
 	const { theme } = React.useContext(ThemeContext);
 	const initLoading = useStore($initLoading);
+	const serverError = useStore($serverError);
+	const navigate = useNavigateParams();
 
 	React.useEffect(() => {
 		init({ payload: { isMobile } });
 	}, []);
+
+	React.useEffect(() => {
+		if (serverError) {
+			navigate({ uri: uris.ERROR });
+		}
+	}, [serverError]);
 
 	if (initLoading) {
 		return <div>loading</div>;
@@ -33,7 +46,9 @@ const App: React.FC<AppProps> = React.memo(({ isMobile }) => {
 			{GlobalStyles({ theme })}
 			<Routes>
 				<Route path={uris.HOME} element={<Layout isMobile={isMobile} />}>
+					<Route path={uris.SANDBOX} element={<SandboxPage />} />
 					<Route path={uris.HOME} element={<Landing />} />
+					<Route path={uris.ERROR} element={<Error />} />
 					<Route
 						path='*'
 						element={

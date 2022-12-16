@@ -30,3 +30,17 @@ export const formatDateToLocale = ({ date }: { date: string }) =>
 		day: 'numeric',
 		month: 'short',
 	});
+
+export const generateMediaQueryCss = ({
+	css,
+	query = parseInt(import.meta.env.VITE_MAX_WIDTH),
+	isMaxWidth = true,
+}: {
+	css: string;
+	query?: number;
+	isMaxWidth?: boolean;
+}) => `
+	@media(${isMaxWidth ? 'max' : 'min'}-width: ${query}px) {
+		${css}
+	}
+`;
