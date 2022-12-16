@@ -7,7 +7,7 @@ import { useStore } from 'effector-react';
 import { $user } from 'src/features/auth/effector/store';
 import { setHeaderLinks } from 'src/features/core/effector/actions';
 import { authLinks, stockLinks } from 'src/features/core/stock/header';
-import { $headerLinks } from 'src/features/core/effector/store';
+import { $dictionary, $headerLinks } from 'src/features/core/effector/store';
 import { HEADER_HEIGHT_IN_REM } from 'src/constants';
 import { useNavigateParams } from 'src/hooks';
 import { generatePath } from 'src/utils';
@@ -16,11 +16,14 @@ const Header = React.memo(() => {
 	const theme = useTheme();
 	const user = useStore($user);
 	const headerLinks = useStore($headerLinks);
+	const dictionary = useStore($dictionary);
 	const navigate = useNavigateParams();
 
 	React.useEffect(() => {
-		setHeaderLinks({ payload: { headerLinks: user ? authLinks : stockLinks } });
-	}, [user]);
+		if (!dictionary) return;
+
+		setHeaderLinks({ payload: { headerLinks: user ? authLinks(dictionary) : stockLinks(dictionary) } });
+	}, [user, dictionary]);
 
 	const handleHeaderLinkClick = React.useCallback(
 		(uri: string) => () => {

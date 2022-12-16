@@ -1,14 +1,17 @@
 import { Core } from '../../core';
 
-const authLinks: Core.HeaderLink[] = [
-	{
-		label: 'Мои сайты',
-		uri: '/profile',
-	},
-	{
-		label: 'Выход',
-		uri: '/logout',
-	},
-];
+const authLinks = (dictionary: Core.Dictionary): Core.HeaderLink[] =>
+	!dictionary
+		? []
+		: [
+				{
+					label: dictionary.CORE.HEADER.PROFILE,
+					uri: '/profile',
+				},
+				{
+					label: dictionary.CORE.HEADER.LOGOUT,
+					uri: '/logout',
+				},
+		  ];
 
 export default authLinks;

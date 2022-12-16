@@ -4,6 +4,7 @@ import { FlexContainer, TextField, Typography } from 'src/components/ui';
 import { ETypographyVariant } from 'src/components/ui/Typography';
 import { useStore } from 'effector-react';
 import { $dictionary } from 'src/features/core/effector/store';
+import { EmailIcon, Icon } from 'src/assets/icons';
 
 const Login = React.memo(() => {
 	const dictionary = useStore($dictionary);
@@ -13,10 +14,11 @@ const Login = React.memo(() => {
 	return (
 		<Container placement='center'>
 			<FormContainer>
-				<Typography variant={ETypographyVariant.BLACK}>{'Вход'}</Typography>
+				<Typography variant={ETypographyVariant.BLACK}>{dictionary.AUTH.LOGIN}</Typography>
 				<TextField
-					name={dictionary.textfieldNames.EMAIL_FIELD.NAME}
-					placeholder={dictionary.textfieldNames.EMAIL_FIELD.PLACEHOLDER}
+					name={dictionary.FIELDS.EMAIL_FIELD.NAME}
+					placeholder={dictionary.FIELDS.EMAIL_FIELD.PLACEHOLDER}
+					adornmentContent={<Icon icon={EmailIcon} />}
 				/>
 			</FormContainer>
 		</Container>

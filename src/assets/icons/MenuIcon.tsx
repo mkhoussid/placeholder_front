@@ -1,9 +1,7 @@
 import * as React from 'react';
+import { IconProps } from '.';
 
-type MenuIconProps = {
-	fillColor?: string;
-};
-const MenuIcon = React.memo(({ fillColor }: MenuIconProps) => {
+const MenuIcon = React.memo(({ fillColor }: IconProps) => {
 	const fill = fillColor || '#262626';
 
 	return (

@@ -18,7 +18,21 @@ export namespace Core {
 		EMAIL_FIELD: TextFieldName;
 	};
 
-	export type Dictionary = {
-		textfieldNames: TextFieldNames;
-	} | null;
+	type Translations = {
+		CORE: {
+			GO_HOME: string;
+			HEADER: {
+				LOGIN: string;
+				ABOUT: string;
+				PROFILE: string;
+				LOGOUT: string;
+			};
+		};
+		AUTH: {
+			LOGIN: string;
+		};
+		FIELDS: TextFieldNames;
+	};
+
+	export type Dictionary = Translations | null;
 }
