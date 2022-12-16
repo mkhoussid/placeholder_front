@@ -12,7 +12,7 @@ const socketEventHandlerClient =
 			console.log('client event', event, data);
 		}
 
-		let timeout = null;
+		const timeout = null;
 
 		switch (event) {
 			case events.COMMON.CONNECT: {

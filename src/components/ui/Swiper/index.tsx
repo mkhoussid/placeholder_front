@@ -23,7 +23,7 @@ const Swiper = React.memo(() => {
 		setCurrentSlide(slides[currentSlide + 1] ? currentSlide + 1 : 0);
 	}, [currentSlide]);
 
-	useInterval({ delay: 1000, ms: 1000, cb: handleIntervalCallback });
+	useInterval({ delay: 1000, ms: 3000, cb: handleIntervalCallback });
 
 	const handleContainerRef = React.useCallback((ref: HTMLDivElement) => {
 		if (!ref) return;

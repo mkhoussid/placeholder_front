@@ -3,22 +3,13 @@ import styled from '@emotion/styled';
 import { Outlet } from 'react-router-dom';
 import Error from './Error';
 import Header from './Header';
+import Footer from './Footer';
 import { useStore } from 'effector-react';
 import { $serverError } from 'src/features/core/effector/store';
 import SandboxPage from 'src/pages/Sandbox';
+import { HEADER_HEIGHT_IN_REM } from 'src/constants';
 
-type TOutletContext = {
-	isMobile: boolean;
-};
-
-declare module 'react-router-dom' {
-	export function useOutletContext(): TOutletContext;
-}
-
-interface LayoutProps {
-	isMobile: boolean;
-}
-const Layout: React.FC<LayoutProps> = React.memo(({ isMobile }) => {
+const Layout = React.memo(() => {
 	const serverError = useStore($serverError);
 
 	// return <SandboxPage />;
@@ -29,13 +20,11 @@ const Layout: React.FC<LayoutProps> = React.memo(({ isMobile }) => {
 				<Header />
 			</HeaderWrapper>
 			<BodyWrapper>
-				<Outlet
-					context={{
-						isMobile,
-					}}
-				/>
+				<Outlet />
 			</BodyWrapper>
-			<FooterWrapper className='no_error'>I'm the footer</FooterWrapper>
+			<FooterWrapper className='no_error'>
+				<Footer />
+			</FooterWrapper>
 		</Wrapper>
 	);
 });
@@ -43,10 +32,11 @@ const Layout: React.FC<LayoutProps> = React.memo(({ isMobile }) => {
 export default Layout;
 
 const Wrapper = styled.div<{ isServerError: boolean }>`
-	${({ isServerError }) => `
+	${({ isServerError, theme }) => `
 		height: 100%;
 		display: grid;
 		grid-template-rows: auto 1fr auto;
+		background-color: ${theme.palette.background.main};
 
 		${
 			isServerError
@@ -65,20 +55,15 @@ const Wrapper = styled.div<{ isServerError: boolean }>`
 	`}
 `;
 
-const Part = styled.div``;
-
-const HeaderWrapper = styled(Part)`
-	background-color: lightblue;
-	height: 5rem;
+const Part = styled.div`
+	width: 100%;
+	height: 100%;
 `;
+
+const HeaderWrapper = styled(Part)``;
 
 const BodyWrapper = styled(Part)`
-	${({ theme }) => `
-		background-color: ${theme.palette.background.main};
-	`}
+	height: calc(100% + ${HEADER_HEIGHT_IN_REM}rem);
 `;
 
-const FooterWrapper = styled(Part)`
-	background-color: lightpurple;
-	height: 10rem;
-`;
+const FooterWrapper = styled(Part)``;

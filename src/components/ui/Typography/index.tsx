@@ -3,6 +3,8 @@ import styled from '@emotion/styled';
 import FlexContainer, { TFlexContainer } from '../FlexContainer';
 import { useTheme } from '@emotion/react';
 import { useOutletContext } from 'react-router-dom';
+import { useStore } from 'effector-react';
+import { $isMobile } from 'src/features/core/effector/store';
 
 export enum ETypographySize {
 	CAPTION,
@@ -35,7 +37,7 @@ const Typography = React.memo(
 		gutterBottom = false,
 		...props
 	}: TypographyProps) => {
-		const { isMobile } = useOutletContext();
+		const isMobile = useStore($isMobile);
 		const theme = useTheme();
 
 		const typographySizeMap = React.useMemo(

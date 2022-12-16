@@ -17,18 +17,16 @@ import Error from './components/Layout/Error';
 import 'src/assets/styles.css';
 import { useNavigateParams } from './hooks';
 import SandboxPage from './pages/Sandbox';
+import { Spinner } from './components/ui';
 
-interface AppProps {
-	isMobile: boolean;
-}
-const App: React.FC<AppProps> = React.memo(({ isMobile }) => {
+const App = React.memo(() => {
 	const { theme } = React.useContext(ThemeContext);
 	const initLoading = useStore($initLoading);
 	const serverError = useStore($serverError);
 	const navigate = useNavigateParams();
 
 	React.useEffect(() => {
-		init({ payload: { isMobile } });
+		init();
 	}, []);
 
 	React.useEffect(() => {
@@ -37,30 +35,30 @@ const App: React.FC<AppProps> = React.memo(({ isMobile }) => {
 		}
 	}, [serverError]);
 
-	if (initLoading) {
-		return <div>loading</div>;
-	}
-
 	return (
 		<EmotionThemeProvider theme={theme}>
 			{GlobalStyles({ theme })}
-			<Routes>
-				<Route path={uris.HOME} element={<Layout isMobile={isMobile} />}>
-					<Route path={uris.SANDBOX} element={<SandboxPage />} />
-					<Route path={uris.HOME} element={<Landing />} />
-					<Route path={uris.ERROR} element={<Error />} />
-					<Route
-						path='*'
-						element={
-							<Redirect
-								to={generatePath({
-									uri: uris.HOME,
-								})}
-							/>
-						}
-					/>
-				</Route>
-			</Routes>
+			{initLoading ? (
+				<Spinner />
+			) : (
+				<Routes>
+					<Route path={uris.HOME} element={<Layout />}>
+						<Route path={uris.SANDBOX} element={<SandboxPage />} />
+						<Route path={uris.HOME} element={<Landing />} />
+						<Route path={uris.ERROR} element={<Error />} />
+						<Route
+							path='*'
+							element={
+								<Redirect
+									to={generatePath({
+										uri: uris.HOME,
+									})}
+								/>
+							}
+						/>
+					</Route>
+				</Routes>
+			)}
 		</EmotionThemeProvider>
 	);
 });

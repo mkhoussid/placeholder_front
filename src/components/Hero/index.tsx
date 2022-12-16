@@ -2,6 +2,7 @@ import React from 'react';
 import styled from '@emotion/styled';
 import Exhibition from './Exhibition';
 import { generateMediaQueryCss } from 'src/utils';
+import { HEADER_HEIGHT_IN_REM } from 'src/constants';
 
 const Hero = React.memo(() => {
 	return (
@@ -30,9 +31,6 @@ const Parent = styled.div`
 `;
 
 const Box = styled.div`
-	background-color: beige;
-
 	&:nth-of-type(2) {
-		background-color: lightblue;
 	}
 `;

@@ -4,24 +4,34 @@ import { createAndExecuteEffect, errorHandler, generateEndpointPath } from 'src/
 import { initSocket } from 'src/socket';
 import { setUser } from 'src/features/auth/effector/actions';
 import apis from 'src/router/apis';
-import { setGeolocationEvent, setInitLoadingEvent, setServerErrorEvent } from './events';
+import {
+	setGeolocationEvent,
+	setHeaderLinksEvent,
+	setInitLoadingEvent,
+	setIsMobileEvent,
+	setServerErrorEvent,
+} from './events';
 import { Core } from '../core';
 import { createEffect } from 'effector';
 import { Auth } from 'src/features/auth/auth';
 import { ActionBase } from 'src/global';
 import { TServerErrorMatrixContent } from 'src/constants';
+import { $isMobile } from './store';
 
-type TSetInitLoading = {
-	payload: {
-		initLoading: boolean;
-	};
-};
-export const setInitLoading = ({ payload: { initLoading } }: TSetInitLoading) => {
+export const setInitLoading = ({ payload: { initLoading } }: ActionBase<{ initLoading: boolean }>) => {
 	setInitLoadingEvent(initLoading);
+};
+
+export const setIsMobile = ({ payload: { isMobile } }: ActionBase<{ isMobile: boolean }>) => {
+	setIsMobileEvent(isMobile);
 };
 
 export const setGeolocation = ({ payload: { geolocation } }: ActionBase<{ geolocation: Core.Geolocation }>) => {
 	setGeolocationEvent(geolocation);
+};
+
+export const setHeaderLinks = ({ payload: { headerLinks } }: ActionBase<{ headerLinks: Core.HeaderLink[] }>) => {
+	setHeaderLinksEvent(headerLinks);
 };
 
 export const setServerError = ({
@@ -30,7 +40,7 @@ export const setServerError = ({
 	setServerErrorEvent(serverError);
 };
 
-export const init = async ({ payload: { isMobile }, watchers }: ActionBase<{ isMobile: boolean }>) => {
+export const init = async () => {
 	try {
 		await createAndExecuteEffect({
 			prehandler: () => setInitLoading({ payload: { initLoading: true } }),
@@ -43,8 +53,8 @@ export const init = async ({ payload: { isMobile }, watchers }: ActionBase<{ isM
 				doneDataWatcher: ({ user }: { user: Auth.User }) => {
 					setUser({ payload: { user } });
 				},
-				finallyWatcher: (result) => {
-					console.log('result', result);
+				finallyWatcher: (res) => {
+					console.log('res', res);
 				},
 			},
 		});

@@ -1,12 +1,14 @@
 import * as React from 'react';
 import styled from '@emotion/styled';
 import { useOutletContext } from 'react-router-dom';
+import { useStore } from 'effector-react';
+import { $isMobile } from 'src/features/core/effector/store';
 
 type ImageProps = {
 	url: string;
 } & React.HTMLAttributes<HTMLDivElement>;
 const Image = React.memo(({ url, ...props }: ImageProps) => {
-	const { isMobile } = useOutletContext();
+	const isMobile = useStore($isMobile);
 
 	return (
 		<Container className='imggggg' {...props}>

@@ -11,6 +11,6 @@ function toJson(component: renderer.ReactTestRenderer) {
 
 test('Link changes the class when hovered', () => {
 	const component = renderer.create(<Button>Hello</Button>);
-	let tree = toJson(component);
+	const tree = toJson(component);
 	expect(tree).toMatchSnapshot();
 });

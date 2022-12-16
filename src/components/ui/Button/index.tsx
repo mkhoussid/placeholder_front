@@ -1,7 +1,8 @@
 import * as React from 'react';
 import styled from '@emotion/styled';
 import Typography, { ETypographySize, ETypographyVariant } from '../Typography';
-import { useOutletContext } from 'react-router-dom';
+import { useStore } from 'effector-react';
+import { $isMobile } from 'src/features/core/effector/store';
 
 type ButtonProps = {
 	text: string;
@@ -10,7 +11,7 @@ type ButtonProps = {
 } & Omit<React.HTMLAttributes<HTMLDivElement>, 'children'>;
 const Button = React.memo(
 	({ text, onClick, variant = ETypographyVariant.WHITE, size = ETypographySize.LG, ...props }: ButtonProps) => {
-		const { isMobile } = useOutletContext();
+		const isMobile = useStore($isMobile);
 
 		const handleClick = React.useCallback((e: React.MouseEvent<HTMLDivElement>) => {
 			e.stopPropagation();

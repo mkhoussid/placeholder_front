@@ -3,4 +3,9 @@ export namespace Core {
 		country: string | null;
 		state: string | null;
 	};
+
+	export type HeaderLink = {
+		label: string;
+		uri: string;
+	};
 }
