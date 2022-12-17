@@ -10,6 +10,8 @@ export const $isMobile = createStore(false);
 
 export const $serverError = createStore<TServerErrorMatrixContent>(null);
 
+export const $inputErrors = createStore<string[]>([]);
+
 export const $dictionary = createStore<Core.Dictionary>(null, {
 	updateFilter: (dictionary) => !!dictionary,
 });

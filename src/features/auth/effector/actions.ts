@@ -1,8 +1,10 @@
+import { AxiosError } from 'axios';
 import { setRequestLoading } from 'src/features/core/effector/actions';
 import { ActionBase } from 'src/global';
 import apis from 'src/router/apis';
 import { createPostBody, EMethodTypes, httpClient } from 'src/services/httpClient';
 import { createAndExecuteEffect, errorHandler, generateEndpointPath } from 'src/utils';
+import { ExtendedAxiosError } from 'src/utils/errorHandler';
 import { Auth } from '../auth';
 import { setAuthValuesEvent, setUserEvent } from './events';
 
@@ -37,6 +39,6 @@ export const doLogin = async ({ payload: { authValues } }: ActionBase<{ authValu
 			},
 		});
 	} catch (err) {
-		errorHandler({ payload: { err } });
+		errorHandler({ payload: { err: err as AxiosError<ExtendedAxiosError> | null } });
 	}
 };

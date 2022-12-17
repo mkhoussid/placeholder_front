@@ -1,9 +1,10 @@
 import { AxiosError } from 'axios';
+import { setToastrContent } from 'src/components/ui/Toastr/effector/actions';
 import { Toastr } from 'src/components/ui/Toastr/types';
 import { serverErrorMatrix } from 'src/constants';
-import { setServerError } from 'src/features/core/effector/actions';
+import { setServerError, setInputErrors } from 'src/features/core/effector/actions';
 
-type ExtendedAxiosError = {
+export type ExtendedAxiosError = {
 	inputErrors?: string[];
 	serverErrorCode?: number;
 	toastr?: Toastr.Content;
@@ -15,7 +16,7 @@ type ErrorHhandler = {
 	};
 };
 const errorHandler = ({ payload: { err = null, redirect = false } }: ErrorHhandler) => {
-	const { serverErrorCode, toastr, inputErrors } = err?.response?.data ?? {};
+	const { serverErrorCode, inputErrors, toastr } = err?.response?.data ?? {};
 
 	if (serverErrorCode) {
 		if (!serverErrorMatrix[serverErrorCode]) {
@@ -24,7 +25,12 @@ const errorHandler = ({ payload: { err = null, redirect = false } }: ErrorHhandl
 		setServerError({ payload: { serverError: serverErrorMatrix[serverErrorCode] } });
 	}
 
+	if (inputErrors) {
+		setInputErrors({ payload: { inputErrors } });
+	}
+
 	if (toastr) {
+		setToastrContent({ payload: { toastrContent: toastr } });
 	}
 	// const isAuthenticationError = err?.response?.status === 403 || err?.response?.status === 401;
 	// if (redirect || isAuthenticationError) {

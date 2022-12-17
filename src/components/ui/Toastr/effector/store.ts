@@ -3,8 +3,6 @@ import { Toastr } from '../types';
 
 export const $isToastrExpiring = createStore(true);
 
-export const $showToastr = createStore(false);
-
 export const $toastrContent = createStore<Toastr.Content>(
 	{
 		title: '',

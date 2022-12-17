@@ -1,10 +1,6 @@
 import { ActionBase } from 'src/global';
 import { Toastr } from '../types';
-import { setIsToastrExpiringEvent, setShowToastrEvent, setToastrContentEvent } from './events';
-
-export const setShowToastr = ({ payload: { showToastr } }: ActionBase<{ showToastr: boolean }>) => {
-	setShowToastrEvent(showToastr);
-};
+import { setIsToastrExpiringEvent, setToastrContentEvent } from './events';
 
 export const setToastrContent = ({ payload: { toastrContent } }: ActionBase<{ toastrContent: Toastr.Content }>) => {
 	setToastrContentEvent(toastrContent);

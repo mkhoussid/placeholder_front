@@ -2,7 +2,7 @@ import * as React from 'react';
 import clsx from 'clsx';
 import styled from '@emotion/styled';
 import { useStore } from 'effector-react';
-import { $requestLoading } from 'src/features/core/effector/store';
+import { $inputErrors, $requestLoading } from 'src/features/core/effector/store';
 
 type TextFieldProps = {
 	containerProps?: React.HTMLAttributes<HTMLDivElement>;
@@ -24,6 +24,7 @@ const TextField = React.memo(
 		disabled,
 		...props
 	}: TextFieldProps) => {
+		const inputErrors = useStore($inputErrors);
 		const requestLoading = useStore($requestLoading);
 
 		if (!name) {
@@ -39,6 +40,7 @@ const TextField = React.memo(
 					name={name}
 					className={clsx('form-field', className)}
 					disabled={requestLoading || disabled}
+					error={inputErrors.includes(name.split('_')[0])}
 					{...props}
 				/>
 				{adornmentPlacement === 'right' && adornment}
@@ -55,6 +57,7 @@ const Container = styled.div<{ gutterBottom: boolean }>`
 
         --input-color: #99a3ba;
         --input-border: #cdd9ed;
+        --input-border-error: #A30000;
         --input-background: #fff;
         --input-placeholder: #cbd1dc;
     
@@ -120,25 +123,27 @@ const Container = styled.div<{ gutterBottom: boolean }>`
     `}
 `;
 
-const Input = styled.input`
-	display: block;
-	width: 100%;
-	padding: 8px 16px;
-	line-height: 25px;
-	font-size: 14px;
-	font-weight: 500;
-	font-family: inherit;
-	border-radius: 6px;
-	-webkit-appearance: none;
-	color: var(--input-color);
-	border: 1px solid var(--input-border);
-	background: var(--input-background);
-	transition: border 0.3s ease;
-	&::placeholder {
-		color: var(--input-placeholder);
-	}
-	&:focus {
-		outline: none;
-		border-color: var(--input-border-focus);
-	}
+const Input = styled.input<{ error: boolean }>`
+	${({ error }) => `
+            display: block;
+            width: 100%;
+            padding: 8px 16px;
+            line-height: 25px;
+            font-size: 14px;
+            font-weight: 500;
+            font-family: inherit;
+            border-radius: 6px;
+            -webkit-appearance: none;
+            color: var(--input-color);
+            border: 1px solid ${error ? 'var(--input-border-error)' : 'var(--input-border)'};
+            background: var(--input-background);
+            transition: border 0.3s ease;
+            &::placeholder {
+                color: var(--input-placeholder);
+            }
+            &:focus {
+                outline: none;
+                border-color: var(--input-border-focus);
+            }
+        `}
 `;

@@ -6,6 +6,6 @@ export const $user = createStore<Auth.User>(null, {
 });
 
 export const $authValues = createStore<Auth.FormValues>({
-	login: '',
+	email: '',
 	password: '',
 });

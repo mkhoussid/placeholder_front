@@ -5,10 +5,9 @@ const CloseIcon = React.memo(({ fillColor }: IconProps) => {
 	const fill = fillColor || '#232323';
 
 	return (
-		<svg aria-hidden='true' viewBox='0 0 14 16'>
+		<svg viewBox='0 0 24 24'>
 			<path
-				fill-rule='evenodd'
-				d='M7.71 8.23l3.75 3.75-1.48 1.48-3.75-3.75-3.75 3.75L1 11.98l3.75-3.75L1 4.48 2.48 3l3.75 3.75L9.98 3l1.48 1.48-3.75 3.75z'
+				d='M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z'
 				fill={fill}
 			/>
 		</svg>

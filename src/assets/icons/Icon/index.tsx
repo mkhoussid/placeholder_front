@@ -40,7 +40,6 @@ const Container = styled((props: any) => <FlexContainer {...props} />)<{ disable
 		border-radius: 50%;
 		padding: 0.25rem;
 		transition: 0.3s ease-in-out;
-
 		&:hover {
 			${disabledButton ? '' : `background: ${theme.palette.common.steel};`}
 		}

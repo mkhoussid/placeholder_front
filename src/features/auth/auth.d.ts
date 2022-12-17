@@ -4,7 +4,7 @@ export namespace Auth {
 	} | null;
 
 	export type FormValues = {
-		login: string;
+		email: string;
 		password: string;
 	};
 

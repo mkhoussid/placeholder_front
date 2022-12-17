@@ -1,10 +1,6 @@
 import { eventFactory, watchHelper } from 'src/utils';
 import { Toastr } from '../types';
-import { $isToastrExpiring, $showToastr, $toastrContent } from './store';
-
-export const setShowToastrEvent = eventFactory<boolean>({
-	storeElement: $showToastr,
-});
+import { $isToastrExpiring, $toastrContent } from './store';
 
 export const setToastrContentEvent = eventFactory<Toastr.Content>({
 	storeElement: $toastrContent,
@@ -12,11 +8,6 @@ export const setToastrContentEvent = eventFactory<Toastr.Content>({
 
 export const setIsToastrExpiringEvent = eventFactory<boolean>({
 	storeElement: $isToastrExpiring,
-});
-
-watchHelper({
-	storeElement: $showToastr,
-	name: '$showToastr',
 });
 
 watchHelper({

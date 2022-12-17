@@ -9,6 +9,7 @@ import {
 	$isMobile,
 	$serverError,
 	$dictionary,
+	$inputErrors,
 } from './store';
 
 export const setInitLoadingEvent = eventFactory<boolean>({
@@ -29,6 +30,10 @@ export const setGeolocationEvent = eventFactory<Core.Geolocation>({
 
 export const setServerErrorEvent = eventFactory<TServerErrorMatrixContent>({
 	storeElement: $serverError,
+});
+
+export const setInputErrorsEvent = eventFactory<string[]>({
+	storeElement: $inputErrors,
 });
 
 export const setHeaderLinksEvent = eventFactory<Core.HeaderLink[]>({
@@ -72,5 +77,4 @@ watchHelper({
 watchHelper({
 	storeElement: $dictionary,
 	name: '$dictionary',
-	print: true,
 });

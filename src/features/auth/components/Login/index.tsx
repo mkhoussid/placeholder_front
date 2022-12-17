@@ -14,7 +14,7 @@ const Login = React.memo(() => {
 	const authValues = useStore($authValues);
 
 	const handleAuthInputChange = React.useCallback(
-		(field: 'login' | 'password') => (e: React.ChangeEvent<HTMLInputElement>) => {
+		(field: 'email' | 'password') => (e: React.ChangeEvent<HTMLInputElement>) => {
 			setAuthValues({
 				payload: {
 					authValues: {
@@ -43,8 +43,8 @@ const Login = React.memo(() => {
 					name={dictionary.FIELDS.EMAIL.NAME}
 					placeholder={dictionary.FIELDS.EMAIL.PLACEHOLDER}
 					adornmentContent={<Icon icon={EmailIcon} />}
-					value={authValues.login}
-					onChange={handleAuthInputChange('login')}
+					value={authValues.email}
+					onChange={handleAuthInputChange('email')}
 				/>
 				<TextField
 					name={dictionary.FIELDS.PASSWORD.NAME}

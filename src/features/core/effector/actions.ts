@@ -11,12 +11,15 @@ import {
 	setRequestLoadingEvent,
 	setIsMobileEvent,
 	setServerErrorEvent,
+	setInputErrorsEvent,
 	setDictionaryEvent,
 } from './events';
 import { Core } from '../core';
 import { Auth } from 'src/features/auth/auth';
 import { ActionBase } from 'src/global';
 import { TServerErrorMatrixContent } from 'src/constants';
+import { AxiosError } from 'axios';
+import { ExtendedAxiosError } from 'src/utils/errorHandler';
 
 export const setInitLoading = ({ payload: { initLoading } }: ActionBase<{ initLoading: boolean }>) => {
 	setInitLoadingEvent(initLoading);
@@ -46,6 +49,10 @@ export const setServerError = ({
 	payload: { serverError },
 }: ActionBase<{ serverError: TServerErrorMatrixContent }>) => {
 	setServerErrorEvent(serverError);
+};
+
+export const setInputErrors = ({ payload: { inputErrors } }: ActionBase<{ inputErrors: string[] }>) => {
+	setInputErrorsEvent(inputErrors);
 };
 
 export const init = async () => {
@@ -81,7 +88,7 @@ export const init = async () => {
 
 		initSocket();
 	} catch (err) {
-		errorHandler({ payload: { err } });
+		errorHandler({ payload: { err: err as AxiosError<ExtendedAxiosError> | null } });
 	} finally {
 		setInitLoading({ payload: { initLoading: false } });
 	}

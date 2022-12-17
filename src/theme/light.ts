@@ -1,7 +1,7 @@
 const light = {
 	primary: {
-		main: '#28A3CC',
-		light: '#424fdb',
+		main: '#68227A',
+		light: '#28A3CC',
 	},
 	secondary: {
 		main: '#02ccba',
