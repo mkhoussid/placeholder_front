@@ -22,7 +22,7 @@ const Button = React.memo(
 
 				onClick?.(e);
 			},
-			[requestLoading],
+			[onClick, requestLoading],
 		);
 
 		return (

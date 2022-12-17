@@ -7,3 +7,4 @@ export type IconProps = {
 export { default as MenuIcon } from './MenuIcon';
 export { default as EmailIcon } from './EmailIcon';
 export { default as KeyIcon } from './KeyIcon';
+export { default as CloseIcon } from './CloseIcon';

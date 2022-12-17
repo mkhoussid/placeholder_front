@@ -17,7 +17,7 @@ import Error from './components/Layout/Error';
 import 'src/assets/styles.css';
 import { useNavigateParams } from './hooks';
 import SandboxPage from './pages/Sandbox';
-import { Spinner } from './components/ui';
+import { Spinner, Toastr } from './components/ui';
 import { Login } from './features/auth/components';
 
 const App = React.memo(() => {
@@ -39,6 +39,7 @@ const App = React.memo(() => {
 	return (
 		<EmotionThemeProvider theme={theme}>
 			{GlobalStyles({ theme })}
+			<Toastr />
 			{initLoading ? (
 				<Spinner />
 			) : (

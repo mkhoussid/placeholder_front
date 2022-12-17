@@ -27,7 +27,7 @@ const Login = React.memo(() => {
 		[authValues],
 	);
 
-	const handleSubmit = React.useCallback(() => {
+	const handleLogin = React.useCallback(() => {
 		doLogin({ payload: { authValues } });
 	}, [authValues]);
 
@@ -54,7 +54,7 @@ const Login = React.memo(() => {
 					onChange={handleAuthInputChange('password')}
 					gutterBottom
 				/>
-				<Button text={dictionary.AUTH_FORM.SUBMIT} onClick={handleSubmit} />
+				<Button text={dictionary.AUTH_FORM.SUBMIT} onClick={handleLogin} />
 			</FormContainer>
 		</Container>
 	);

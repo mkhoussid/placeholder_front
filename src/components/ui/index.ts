@@ -5,3 +5,4 @@ export { default as TextField } from './TextField';
 export { default as Image } from './Image';
 export { default as Swiper } from './Swiper';
 export { default as Spinner } from './Spinner';
+export { default as Toastr } from './Toastr';
