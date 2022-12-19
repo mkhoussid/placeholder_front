@@ -60,7 +60,12 @@ const Part = styled.div`
 	height: 100%;
 `;
 
-const HeaderWrapper = styled(Part)``;
+const HeaderWrapper = styled(Part)`
+	position: fixed;
+	left: 0;
+	top: 0;
+	z-index: 10;
+`;
 
 const BodyWrapper = styled(Part)`
 	height: 100%;
