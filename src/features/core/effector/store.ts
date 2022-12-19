@@ -26,4 +26,7 @@ export const $geolocation = createStore<Core.Geolocation>(
 	},
 );
 
-export const $headerLinks = createStore<Core.HeaderLink[]>([]);
+export const $headerLinks = createStore<{ navHeaderLinks: Core.HeaderLink[]; authenticationLinks: Core.HeaderLink[] }>({
+	navHeaderLinks: [],
+	authenticationLinks: [],
+});

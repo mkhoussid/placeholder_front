@@ -42,19 +42,24 @@ const Login = React.memo(() => {
 				<TextField
 					name={dictionary.FIELDS.EMAIL.NAME}
 					placeholder={dictionary.FIELDS.EMAIL.PLACEHOLDER}
-					adornmentContent={<Icon icon={EmailIcon} />}
+					adornmentContent={<Icon icon={EmailIcon} disabledButton />}
 					value={authValues.email}
 					onChange={handleAuthInputChange('email')}
 				/>
 				<TextField
 					name={dictionary.FIELDS.PASSWORD.NAME}
 					placeholder={dictionary.FIELDS.PASSWORD.PLACEHOLDER}
-					adornmentContent={<Icon icon={KeyIcon} />}
+					adornmentContent={<Icon icon={KeyIcon} disabledButton />}
 					value={authValues.password}
 					onChange={handleAuthInputChange('password')}
+					type='password'
 					gutterBottom
 				/>
-				<Button text={dictionary.AUTH_FORM.SUBMIT} onClick={handleLogin} />
+				<Button
+					text={dictionary.AUTH_FORM.SUBMIT}
+					onClick={handleLogin}
+					disableOnRequestLoading
+				/>
 			</FormContainer>
 		</Container>
 	);
@@ -66,8 +71,10 @@ const Container = styled(FlexContainer)``;
 
 const FormContainer = styled.div`
 	${({ theme }) => `
-        background-color: ${theme.palette.background.light};
         padding: 2rem;
         border-radius: 0.5rem;
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(0.25rem);
+        transform-style: preserve-3d;
     `}
 `;

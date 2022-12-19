@@ -40,7 +40,11 @@ type TCreateAndExecuteEffect = {
 	handler: () => void;
 	watchers?: EffectWatchers;
 };
-export const createAndExecuteEffect = async ({ handler, watchers = {} }: TCreateAndExecuteEffect): Promise<void> => {
+export const createAndExecuteEffect = async ({
+	handler,
+	prehandler,
+	watchers = {},
+}: TCreateAndExecuteEffect): Promise<void> => {
 	const effect = createEffect(handler);
 
 	if (watchers.doneWatcher) {
@@ -62,6 +66,8 @@ export const createAndExecuteEffect = async ({ handler, watchers = {} }: TCreate
 	if (watchers.finallyWatcher) {
 		effect.finally.watch(watchers.finallyWatcher);
 	}
+
+	prehandler?.();
 
 	return effect();
 };

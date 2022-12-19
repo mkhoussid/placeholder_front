@@ -5,13 +5,14 @@ import { $isToastrExpiring, $toastrContent } from './effector/store';
 import { CloseIcon, Icon } from 'src/assets/icons';
 import { css, keyframes } from '@emotion/react';
 import { setToastrContent } from './effector/actions';
-import { useInterval } from 'src/hooks';
+import { useInterval, useTimeout } from 'src/hooks';
 
 type ToastrProps = {
 	animationDuration?: number;
 	animationSpeedMs?: number;
 };
 const Toastr = React.memo(({ animationSpeedMs = 500, animationDuration = 5000 }: ToastrProps) => {
+	const [showTimeout, setShowTimeout] = React.useState<NodeJS.Timeout>();
 	const [localShow, setLocalShow] = React.useState(false);
 
 	const toastrContent = useStore($toastrContent);
@@ -33,11 +34,13 @@ const Toastr = React.memo(({ animationSpeedMs = 500, animationDuration = 5000 }:
 		setLocalShow(false);
 
 		setTimeout(() => {
-			setToastrContent({ payload: { toastrContent: { title: '', message: '' } } });
+			setToastrContent({
+				payload: { toastrContent: { title: '', message: '' } },
+			});
 		}, animationSpeedMs);
-	}, []);
+	}, [toastrContent, showTimeout]);
 
-	useInterval({ ms: animationDuration + animationSpeedMs, cb: handleClose });
+	useTimeout({ timeoutInMs: animationDuration + animationSpeedMs, cb: handleClose, dependency: toastrContent });
 
 	if (!toastrContent.title) {
 		return null;
@@ -101,7 +104,7 @@ const slideOut = keyframes`
 `;
 
 const ToastContainer = styled.div<{ showToastr: boolean; animationSpeedMs: number }>`
-	${({ theme, showToastr, animationSpeedMs }) => css`
+	${({ showToastr, animationSpeedMs }) => css`
 		top: 0.5rem;
 		left: 0.5rem;
 		z-index: 10;

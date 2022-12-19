@@ -27,6 +27,7 @@ export namespace Core {
 				ABOUT: string;
 				PROFILE: string;
 				LOGOUT: string;
+				HOME: string;
 			};
 		};
 		AUTH_FORM: {

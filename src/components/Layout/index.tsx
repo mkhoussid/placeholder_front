@@ -22,9 +22,9 @@ const Layout = React.memo(() => {
 			<BodyWrapper>
 				<Outlet />
 			</BodyWrapper>
-			<FooterWrapper className='no_error'>
+			{/* <FooterWrapper className='no_error'>
 				<Footer />
-			</FooterWrapper>
+			</FooterWrapper> */}
 		</Wrapper>
 	);
 });

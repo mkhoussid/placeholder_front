@@ -37,7 +37,9 @@ export const setGeolocation = ({ payload: { geolocation } }: ActionBase<{ geoloc
 	setGeolocationEvent(geolocation);
 };
 
-export const setHeaderLinks = ({ payload: { headerLinks } }: ActionBase<{ headerLinks: Core.HeaderLink[] }>) => {
+export const setHeaderLinks = ({
+	payload: { headerLinks },
+}: ActionBase<{ headerLinks: { navHeaderLinks: Core.HeaderLink[]; authenticationLinks: Core.HeaderLink[] } }>) => {
 	setHeaderLinksEvent(headerLinks);
 };
 

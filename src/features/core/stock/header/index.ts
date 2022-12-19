@@ -1,2 +1,2 @@
-export { default as stockLinks } from './stockLinks';
-export { default as authLinks } from './authLinks';
+export * from './authenticationLinks';
+export { default as navigationLinks } from './navigationLinks';

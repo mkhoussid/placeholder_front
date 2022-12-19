@@ -3,14 +3,25 @@ import styled from '@emotion/styled';
 import Typography, { ETypographySize, ETypographyVariant } from '../Typography';
 import { useStore } from 'effector-react';
 import { $isMobile, $requestLoading } from 'src/features/core/effector/store';
+import { css } from '@emotion/react';
 
 type ButtonProps = {
 	text: string;
 	variant?: ETypographyVariant;
 	size?: ETypographySize;
+	disableOnRequestLoading?: boolean;
+	disabled?: boolean;
 } & Omit<React.HTMLAttributes<HTMLDivElement>, 'children'>;
 const Button = React.memo(
-	({ text, onClick, variant = ETypographyVariant.WHITE, size = ETypographySize.LG, ...props }: ButtonProps) => {
+	({
+		text,
+		onClick,
+		variant = ETypographyVariant.WHITE,
+		size = ETypographySize.LG,
+		disableOnRequestLoading,
+		disabled = false,
+		...props
+	}: ButtonProps) => {
 		const isMobile = useStore($isMobile);
 		const requestLoading = useStore($requestLoading);
 
@@ -26,7 +37,12 @@ const Button = React.memo(
 		);
 
 		return (
-			<Container onClick={handleClick} isMobile={isMobile} {...props}>
+			<Container
+				onClick={handleClick}
+				isMobile={isMobile}
+				disabled={(disableOnRequestLoading && requestLoading) || disabled}
+				{...props}
+			>
 				<Typography variant={variant} size={size} containerProps={{ placement: 'center' }}>
 					{text}
 				</Typography>
@@ -37,17 +53,17 @@ const Button = React.memo(
 
 export default Button;
 
-const Container = styled.div<{ isMobile: boolean }>`
-	${({ isMobile }) => `
+const Container = styled.div<{ isMobile: boolean; disabled: boolean }>`
+	${({ isMobile, disabled }) => css`
 		height: auto;
 		text-align: center;
 		width: auto;
-		cursor: pointer;
-		color: #FFF;
+		cursor: ${disabled ? 'progress' : 'pointer'};
+		color: #fff;
 		transition: all 0.5s;
 		position: relative;
 		padding: ${isMobile ? 1 : 0.5}rem;
-	 
+
 		&:before {
 			content: '';
 			position: absolute;
@@ -56,7 +72,7 @@ const Container = styled.div<{ isMobile: boolean }>`
 			width: 100%;
 			height: 100%;
 			z-index: 1;
-			background-color: rgba(255,255,255,0.1);
+			background-color: rgba(255, 255, 255, 0.1);
 			transition: all 0.3s;
 		}
 
@@ -70,20 +86,24 @@ const Container = styled.div<{ isMobile: boolean }>`
 			z-index: 1;
 			opacity: 0;
 			transition: all 0.3s;
-			border: 1px solid rgba(255,255,255,0.5);
-			transform: scale(1.2,1.2);
+			border: 1px solid rgba(255, 255, 255, 0.5);
+			transform: scale(1.2, 1.2);
 		}
 
 		&:hover {
-			&:after {
-				opacity: 1;
-				transform: scale(1,1);
-			}
+			${!disabled
+				? `
+						&:after {
+							opacity: 1;
+							transform: scale(1,1);
+						}
 
-			&:before {
-				opacity: 0 ;
-				transform: scale(0.5,0.5);
-			}
+						&:before {
+							opacity: 0 ;
+							transform: scale(0.5,0.5);
+						}
+					`
+				: ``}
 		}
 	`}
 `;

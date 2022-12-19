@@ -36,7 +36,10 @@ export const setInputErrorsEvent = eventFactory<string[]>({
 	storeElement: $inputErrors,
 });
 
-export const setHeaderLinksEvent = eventFactory<Core.HeaderLink[]>({
+export const setHeaderLinksEvent = eventFactory<{
+	navHeaderLinks: Core.HeaderLink[];
+	authenticationLinks: Core.HeaderLink[];
+}>({
 	storeElement: $headerLinks,
 });
 

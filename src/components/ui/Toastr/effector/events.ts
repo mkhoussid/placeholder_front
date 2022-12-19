@@ -13,6 +13,7 @@ export const setIsToastrExpiringEvent = eventFactory<boolean>({
 watchHelper({
 	storeElement: $toastrContent,
 	name: '$toastrContent',
+	print: true,
 });
 
 watchHelper({

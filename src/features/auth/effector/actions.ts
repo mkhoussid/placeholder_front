@@ -1,5 +1,5 @@
 import { AxiosError } from 'axios';
-import { setRequestLoading } from 'src/features/core/effector/actions';
+import { setInputErrors, setRequestLoading } from 'src/features/core/effector/actions';
 import { ActionBase } from 'src/global';
 import apis from 'src/router/apis';
 import { createPostBody, EMethodTypes, httpClient } from 'src/services/httpClient';
@@ -21,6 +21,7 @@ export const doLogin = async ({ payload: { authValues } }: ActionBase<{ authValu
 		await createAndExecuteEffect({
 			prehandler: () => {
 				setRequestLoading({ payload: { requestLoading: true } });
+				setInputErrors({ payload: { inputErrors: [] } });
 			},
 			handler: async () =>
 				httpClient({

@@ -1,7 +1,7 @@
 const light = {
 	primary: {
 		main: '#68227A',
-		light: '#28A3CC',
+		light: '#9e65ab',
 	},
 	secondary: {
 		main: '#02ccba',
@@ -12,7 +12,7 @@ const light = {
 		light: '#bf3d3d',
 	},
 	background: {
-		main: '#394A55',
+		main: '#000000',
 		light: '#6c7f8c',
 	},
 	// typography: {

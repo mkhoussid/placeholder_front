@@ -9,6 +9,6 @@ export const $toastrContent = createStore<Toastr.Content>(
 		message: '',
 	},
 	{
-		updateFilter: (user) => !!user,
+		updateFilter: (update) => !!update,
 	},
 );
