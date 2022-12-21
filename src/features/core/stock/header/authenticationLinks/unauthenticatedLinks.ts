@@ -8,10 +8,12 @@ const unauthenticatedLinks = (dictionary: Core.Dictionary): Core.HeaderLink[] =>
 				{
 					label: dictionary.CORE.HEADER.LOGIN,
 					uri: uris.AUTH.LOGIN,
+					icon: 'LoginIcon',
 				},
 				{
 					label: dictionary.CORE.HEADER.ABOUT,
 					uri: uris.ABOUT,
+					icon: 'AboutIcon',
 				},
 		  ];
 

@@ -4,9 +4,17 @@ export namespace Core {
 		state: string | null;
 	};
 
+	export type Layout = {
+		visibility: {
+			header: boolean;
+			footer: boolean;
+		};
+	};
+
 	export type HeaderLink = {
 		label: string;
 		uri: string;
+		icon?: string;
 	};
 
 	type TextFieldName = {

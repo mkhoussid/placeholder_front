@@ -5,6 +5,7 @@ import { useTheme } from '@emotion/react';
 import { useOutletContext } from 'react-router-dom';
 import { useStore } from 'effector-react';
 import { $isMobile } from 'src/features/core/effector/store';
+import * as Icons from 'src/assets/icons';
 
 export enum ETypographySize {
 	CAPTION,
@@ -28,6 +29,7 @@ type TypographyProps = {
 	containerProps?: TFlexContainer;
 	gutterBottom?: boolean;
 	variant?: ETypographyVariant;
+	icon?: React.ReactNode;
 } & React.HtmlHTMLAttributes<HTMLParagraphElement>;
 const Typography = React.memo(
 	({
@@ -35,6 +37,7 @@ const Typography = React.memo(
 		variant = ETypographyVariant.PRIMARY,
 		size = ETypographySize.MD,
 		gutterBottom = false,
+		icon,
 		...props
 	}: TypographyProps) => {
 		const isMobile = useStore($isMobile);
@@ -66,8 +69,17 @@ const Typography = React.memo(
 
 		return (
 			<Container gutterBottom={gutterBottom} {...containerProps}>
+				{icon && (
+					<Icons.Icon
+						// @ts-ignore
+						icon={Icons[icon as any] as any}
+						fillColor={theme.palette.common.white}
+						disabledButton
+					/>
+				)}
 				<Text
 					size={size}
+					hasIcon={!!icon}
 					variant={variant}
 					typographySizeMap={typographySizeMap}
 					typographyVariantMap={typographyVariantMap}
@@ -92,9 +104,11 @@ const Text = styled.p<{
 	variant: ETypographyVariant;
 	typographySizeMap: Record<ETypographySize, number>;
 	typographyVariantMap: Record<ETypographyVariant, string>;
+	hasIcon: boolean;
 }>`
-	${({ size, variant, typographySizeMap, typographyVariantMap }) => `
+	${({ size, variant, typographySizeMap, typographyVariantMap, hasIcon }) => `
 		font-size: ${typographySizeMap[size]}rem;
 		color: ${typographyVariantMap[variant]};
+		margin-left: ${hasIcon ? 0.25 : 0}rem;
 	`}
 `;

@@ -1,13 +1,13 @@
 import { eventFactory, watchHelper } from 'src/utils';
 import { Auth } from '../auth';
-import { $authValues, $user } from './store';
+import { $authEmailValue, $user } from './store';
 
 export const setUserEvent = eventFactory<Auth.User>({
 	storeElement: $user,
 });
 
-export const setAuthValuesEvent = eventFactory<Auth.FormValues>({
-	storeElement: $authValues,
+export const setAuthEmailValueEvent = eventFactory<string>({
+	storeElement: $authEmailValue,
 });
 
 watchHelper({
@@ -16,6 +16,6 @@ watchHelper({
 });
 
 watchHelper({
-	storeElement: $authValues,
-	name: '$authValues',
+	storeElement: $authEmailValue,
+	name: '$authEmailValue',
 });

@@ -1,3 +1,5 @@
+import { css } from '@emotion/react';
+
 export { default as errorHandler } from './errorHandler';
 
 // input: (#FFFFFF, 0.5), output: rgba(255, 255, 255, 0.5)
@@ -32,7 +34,7 @@ export const formatDateToLocale = ({ date }: { date: string }) =>
 	});
 
 export const generateMediaQueryCss = ({
-	css,
+	css: _css,
 	query = parseInt(import.meta.env.VITE_MAX_WIDTH),
 	isMaxWidth = true,
 }: {
@@ -40,7 +42,9 @@ export const generateMediaQueryCss = ({
 	query?: number;
 	isMaxWidth?: boolean;
 }) => `
-	@media(${isMaxWidth ? 'max' : 'min'}-width: ${query}px) {
-		${css}
+	@media (${isMaxWidth ? 'max' : 'min'}-width: ${query}px) {
+		${() => css`
+			${_css}
+		`}
 	}
 `;

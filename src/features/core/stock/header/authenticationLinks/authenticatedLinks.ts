@@ -8,10 +8,12 @@ const authenticatedLinks = (dictionary: Core.Dictionary): Core.HeaderLink[] =>
 				{
 					label: dictionary.CORE.HEADER.PROFILE,
 					uri: uris.PROFILE,
+					icon: 'ProfileIcon',
 				},
 				{
 					label: dictionary.CORE.HEADER.LOGOUT,
 					uri: uris.AUTH.LOGOUT,
+					icon: 'LogoutIcon',
 				},
 		  ];
 

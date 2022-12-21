@@ -1,3 +1,4 @@
+import { isAsyncFunction } from './helpers';
 import { createEffect, createEvent, Event, Store } from 'effector';
 import { Auth } from 'src/features/auth/auth';
 import { EffectWatchers } from 'src/global';
@@ -41,11 +42,20 @@ type TCreateAndExecuteEffect = {
 	watchers?: EffectWatchers;
 };
 export const createAndExecuteEffect = async ({
-	handler,
 	prehandler,
+	handler,
 	watchers = {},
 }: TCreateAndExecuteEffect): Promise<void> => {
 	const effect = createEffect(handler);
+	const isAsync = isAsyncFunction({ func: prehandler });
+
+	if (isAsync) {
+		console.log('entered111');
+		await prehandler();
+	} else {
+		console.log('entered222');
+		prehandler();
+	}
 
 	if (watchers.doneWatcher) {
 		effect.done.watch(watchers.doneWatcher);

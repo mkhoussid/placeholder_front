@@ -5,26 +5,30 @@ import Error from './Error';
 import Header from './Header';
 import Footer from './Footer';
 import { useStore } from 'effector-react';
-import { $serverError } from 'src/features/core/effector/store';
+import { $serverError, $layout } from 'src/features/core/effector/store';
 import SandboxPage from 'src/pages/Sandbox';
 import { HEADER_HEIGHT_IN_REM } from 'src/constants';
 
 const Layout = React.memo(() => {
 	const serverError = useStore($serverError);
-
+	const layout = useStore($layout);
 	// return <SandboxPage />;
 
 	return (
 		<Wrapper isServerError={!!serverError}>
-			<HeaderWrapper className='no_error'>
-				<Header />
-			</HeaderWrapper>
+			{layout.visibility.header && (
+				<HeaderWrapper className='no_error'>
+					<Header />
+				</HeaderWrapper>
+			)}
 			<BodyWrapper>
 				<Outlet />
 			</BodyWrapper>
-			{/* <FooterWrapper className='no_error'>
-				<Footer />
-			</FooterWrapper> */}
+			{layout.visibility.footer && (
+				<FooterWrapper className='no_error'>
+					<Footer />
+				</FooterWrapper>
+			)}
 		</Wrapper>
 	);
 });
@@ -61,10 +65,8 @@ const Part = styled.div`
 `;
 
 const HeaderWrapper = styled(Part)`
-	position: fixed;
-	left: 0;
-	top: 0;
-	z-index: 10;
+	z-index: 5;
+	height: 5rem;
 `;
 
 const BodyWrapper = styled(Part)`

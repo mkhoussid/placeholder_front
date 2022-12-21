@@ -199,6 +199,7 @@ export type TColors = {
 
 	TRANSPARENT: string;
 
+	WHITE_3_ALPHA: string;
 	WHITE_5_ALPHA: string;
 	WHITE_12_ALPHA: string;
 	WHITE_16_ALPHA: string;
@@ -425,6 +426,7 @@ const COLORS = {
 
 	TRANSPARENT: 'rgba(255, 255, 255, 0)',
 
+	WHITE_3_ALPHA: 'rgba(255, 255, 255, 0.05)',
 	WHITE_5_ALPHA: 'rgba(255, 255, 255, 0.5)',
 	WHITE_12_ALPHA: 'rgba(255, 255, 255, 0.12)',
 	WHITE_16_ALPHA: 'rgba(255, 255, 255, 0.16)',

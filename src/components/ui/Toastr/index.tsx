@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import { useStore } from 'effector-react';
 import { $isToastrExpiring, $toastrContent } from './effector/store';
 import { CloseIcon, Icon } from 'src/assets/icons';
-import { css, keyframes } from '@emotion/react';
+import { css, keyframes, useTheme } from '@emotion/react';
 import { setToastrContent } from './effector/actions';
 import { useInterval, useTimeout } from 'src/hooks';
 
@@ -12,6 +12,7 @@ type ToastrProps = {
 	animationSpeedMs?: number;
 };
 const Toastr = React.memo(({ animationSpeedMs = 500, animationDuration = 5000 }: ToastrProps) => {
+	const theme = useTheme();
 	const [showTimeout, setShowTimeout] = React.useState<NodeJS.Timeout>();
 	const [localShow, setLocalShow] = React.useState(false);
 
@@ -40,6 +41,7 @@ const Toastr = React.memo(({ animationSpeedMs = 500, animationDuration = 5000 }:
 		}, animationSpeedMs);
 	}, [toastrContent, showTimeout]);
 
+	// TODO, fix interval for some reason
 	useTimeout({ timeoutInMs: animationDuration + animationSpeedMs, cb: handleClose, dependency: toastrContent });
 
 	if (!toastrContent.title) {
@@ -53,7 +55,7 @@ const Toastr = React.memo(({ animationSpeedMs = 500, animationDuration = 5000 }:
 					<ToastrTitle>{toastrContent.title}</ToastrTitle>
 					<ToastrMessage>{toastrContent.message}</ToastrMessage>
 				</ToastContent>
-				<Icon onClick={handleClose} icon={CloseIcon} />
+				<Icon onClick={handleClose} icon={CloseIcon} fillColor={theme.palette.common.white} />
 				<ToastProgressBar
 					role='progressbar'
 					aria-hidden='false'

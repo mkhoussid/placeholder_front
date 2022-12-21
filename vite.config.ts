@@ -11,6 +11,7 @@ export default defineConfig({
 	envPrefix: 'VITE',
 	server: {
 		port: 3030,
+		open: true,
 	},
 	plugins: [
 		react({
@@ -30,6 +31,16 @@ export default defineConfig({
 					// 		},
 					// 	},
 					// ],
+					[
+						'@emotion',
+						{
+							// sourceMap is on by default but source maps are dead code eliminated in production
+							sourceMap: true,
+							autoLabel: 'dev-only',
+							labelFormat: '[local]',
+							cssPropOptimization: true,
+						},
+					],
 				],
 				babelrc: true,
 				configFile: false,

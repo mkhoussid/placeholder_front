@@ -13,6 +13,7 @@ import {
 	setServerErrorEvent,
 	setInputErrorsEvent,
 	setDictionaryEvent,
+	setLayoutEvent,
 } from './events';
 import { Core } from '../core';
 import { Auth } from 'src/features/auth/auth';
@@ -20,6 +21,7 @@ import { ActionBase } from 'src/global';
 import { TServerErrorMatrixContent } from 'src/constants';
 import { AxiosError } from 'axios';
 import { ExtendedAxiosError } from 'src/utils/errorHandler';
+import media from 'src/assets/media/cdn';
 
 export const setInitLoading = ({ payload: { initLoading } }: ActionBase<{ initLoading: boolean }>) => {
 	setInitLoadingEvent(initLoading);
@@ -35,6 +37,10 @@ export const setIsMobile = ({ payload: { isMobile } }: ActionBase<{ isMobile: bo
 
 export const setGeolocation = ({ payload: { geolocation } }: ActionBase<{ geolocation: Core.Geolocation }>) => {
 	setGeolocationEvent(geolocation);
+};
+
+export const setLayout = ({ payload: { layout } }: ActionBase<{ layout: Core.Layout }>) => {
+	setLayoutEvent(layout);
 };
 
 export const setHeaderLinks = ({
@@ -60,7 +66,30 @@ export const setInputErrors = ({ payload: { inputErrors } }: ActionBase<{ inputE
 export const init = async () => {
 	try {
 		await createAndExecuteEffect({
-			prehandler: () => setInitLoading({ payload: { initLoading: true } }),
+			prehandler: async () =>
+				new Promise((res) => {
+					const loadedImages = [];
+					setInitLoading({ payload: { initLoading: true } });
+					const img = new Image();
+					const img2 = new Image();
+					const img3 = new Image();
+					const img4 = new Image();
+					img.src = media['heroImage8_compressed.webp'];
+					img2.src = media['fog-low.webp'];
+					img3.src = media['clouds.webp'];
+					img4.src = media['logo_sitegrass_ru.webp'];
+
+					const handleOnLoad = (imageId: string) => () => {
+						loadedImages.push(imageId);
+						if (loadedImages.length === 4) {
+							res();
+						}
+					};
+
+					[img, img2, img3, img4].forEach((img, index) => {
+						img.onload = handleOnLoad(`img${index}`);
+					});
+				}),
 			handler: async () =>
 				httpClient({
 					url: generateEndpointPath({ path: apis.INIT.ROOT }),

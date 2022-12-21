@@ -12,7 +12,7 @@ const light = {
 		light: '#bf3d3d',
 	},
 	background: {
-		main: '#000000',
+		main: '#1c1c25',
 		light: '#6c7f8c',
 	},
 	// typography: {

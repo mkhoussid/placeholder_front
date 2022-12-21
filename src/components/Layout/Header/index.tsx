@@ -54,22 +54,28 @@ const Header = React.memo(() => {
 			<MenuIconStyled icon={MenuIcon} fillColor={theme.palette.common.white} />
 
 			<HeaderLinksLeftContainer placement='start'>
-				{headerLinks.navHeaderLinks.map(({ label, uri }) => (
+				{headerLinks.navHeaderLinks.map(({ label, uri, icon }) => (
 					<HeaderLink
+						key={`headerlink-${label}`}
 						onClick={handleHeaderLinkClick(uri)}
 						isActive={getIsActive({ uri, pathname })}
 					>
-						<Typography variant={ETypographyVariant.WHITE}>{label}</Typography>
+						<Typography variant={ETypographyVariant.WHITE} icon={icon}>
+							{label}
+						</Typography>
 					</HeaderLink>
 				))}
 			</HeaderLinksLeftContainer>
 			<HeaderLinksRightContainer placement='end'>
-				{headerLinks.authenticationLinks.map(({ label, uri }) => (
+				{headerLinks.authenticationLinks.map(({ label, uri, icon }) => (
 					<HeaderLink
+						key={`headerlink-${label}`}
 						onClick={handleHeaderLinkClick(uri)}
 						isActive={getIsActive({ uri, pathname })}
 					>
-						<Typography variant={ETypographyVariant.WHITE}>{label}</Typography>
+						<Typography variant={ETypographyVariant.WHITE} icon={icon}>
+							{label}
+						</Typography>
 					</HeaderLink>
 				))}
 			</HeaderLinksRightContainer>

@@ -10,6 +10,13 @@ export const $isMobile = createStore(false);
 
 export const $serverError = createStore<TServerErrorMatrixContent>(null);
 
+export const $layout = createStore<Core.Layout>({
+	visibility: {
+		header: true,
+		footer: true,
+	},
+});
+
 export const $inputErrors = createStore<string[]>([]);
 
 export const $dictionary = createStore<Core.Dictionary>(null, {

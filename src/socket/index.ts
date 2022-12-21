@@ -5,6 +5,8 @@ import socketEventHandlerClient from './eventHandler';
 import events from './events';
 import { errorHandler, generateNumberInRange } from 'src/utils';
 import { SITE_DEVICE_ID } from 'src/constants';
+import { AxiosError } from 'axios';
+import { ExtendedAxiosError } from 'src/utils/errorHandler';
 
 export const initSocket = async () => {
 	try {
@@ -55,6 +57,6 @@ export const initSocket = async () => {
 		);
 	} catch (err) {
 		console.log('Error caught with socket', err);
-		errorHandler({ payload: { err } });
+		errorHandler({ payload: { err: err as AxiosError<ExtendedAxiosError> | null } });
 	}
 };

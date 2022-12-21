@@ -6,17 +6,17 @@ import { createPostBody, EMethodTypes, httpClient } from 'src/services/httpClien
 import { createAndExecuteEffect, errorHandler, generateEndpointPath } from 'src/utils';
 import { ExtendedAxiosError } from 'src/utils/errorHandler';
 import { Auth } from '../auth';
-import { setAuthValuesEvent, setUserEvent } from './events';
+import { setAuthEmailValueEvent, setUserEvent } from './events';
 
 export const setUser = ({ payload: { user } }: ActionBase<{ user: Auth.User }>) => {
 	setUserEvent(user);
 };
 
-export const setAuthValues = ({ payload: { authValues } }: ActionBase<{ authValues: Auth.FormValues }>) => {
-	setAuthValuesEvent(authValues);
+export const setAuthEmailValue = ({ payload: { authEmailValue } }: ActionBase<{ authEmailValue: string }>) => {
+	setAuthEmailValueEvent(authEmailValue);
 };
 
-export const doLogin = async ({ payload: { authValues } }: ActionBase<{ authValues: Auth.FormValues }>) => {
+export const doLogin = async ({ payload: { email } }: ActionBase<{ email: string }>) => {
 	try {
 		await createAndExecuteEffect({
 			prehandler: () => {
@@ -27,11 +27,10 @@ export const doLogin = async ({ payload: { authValues } }: ActionBase<{ authValu
 				httpClient({
 					url: generateEndpointPath({ path: apis.AUTH.ROOT }),
 					method: EMethodTypes.POST,
-					body: createPostBody({ authValues }),
+					body: createPostBody({ email }),
 				}),
 			watchers: {
 				doneDataWatcher: ({ user }: { user: Auth.User }) => {
-					console.log('user!', user);
 					setUser({ payload: { user } });
 				},
 				finallyWatcher: (res) => {

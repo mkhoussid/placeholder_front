@@ -10,6 +10,7 @@ import {
 	$serverError,
 	$dictionary,
 	$inputErrors,
+	$layout,
 } from './store';
 
 export const setInitLoadingEvent = eventFactory<boolean>({
@@ -18,6 +19,10 @@ export const setInitLoadingEvent = eventFactory<boolean>({
 
 export const setRequestLoadingEvent = eventFactory<boolean>({
 	storeElement: $requestLoading,
+});
+
+export const setLayoutEvent = eventFactory<Core.Layout>({
+	storeElement: $layout,
 });
 
 export const setIsMobileEvent = eventFactory<boolean>({
@@ -75,6 +80,11 @@ watchHelper({
 watchHelper({
 	storeElement: $headerLinks,
 	name: '$headerLinks',
+});
+
+watchHelper({
+	storeElement: $layout,
+	name: '$layout',
 });
 
 watchHelper({
