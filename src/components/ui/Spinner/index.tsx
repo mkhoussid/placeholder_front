@@ -15,19 +15,17 @@ const SVG = styled.svg`
 	transform-origin: 50% 65%;
 `;
 
-const Spinner = React.memo(({ height = 80, width = 80, color: _color }: any): React.ReactElement => {
+interface SpinnerProps {
+	size?: number;
+	color?: string;
+}
+const Spinner = React.memo(({ color: _color, size = 80 }: SpinnerProps): React.ReactElement => {
 	const theme = useTheme();
 
 	const color = _color || theme.palette.primary.main;
 	return (
 		<Container aria-label={'triangle-loading'} aria-busy='true' role='status'>
-			<SVG
-				id='triangle'
-				width={width}
-				height={height}
-				viewBox='-3 -4 39 39'
-				data-testid='triangle-svg'
-			>
+			<SVG id='triangle' width={size} height={size} viewBox='-3 -4 39 39' data-testid='triangle-svg'>
 				<Polygon fill='transparent' stroke={color} strokeWidth='1' points='16,0 32,32 0,32' />
 			</SVG>
 		</Container>
@@ -41,4 +39,5 @@ const Container = styled.div`
 	align-items: center;
 	justify-content: center;
 	height: 100%;
+	font-size: 0.5rem;
 `;

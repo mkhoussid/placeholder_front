@@ -1,4 +1,5 @@
 export { default as Button } from './Button';
+export { default as Progress } from './Progress';
 export { default as FlexContainer } from './FlexContainer';
 export { default as Typography } from './Typography';
 export { default as TextField } from './TextField';

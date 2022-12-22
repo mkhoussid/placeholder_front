@@ -3,7 +3,8 @@ import styled from '@emotion/styled';
 import Typography, { ETypographySize, ETypographyVariant } from '../Typography';
 import { useStore } from 'effector-react';
 import { $isMobile, $requestLoading } from 'src/features/core/effector/store';
-import { css } from '@emotion/react';
+import { css, useTheme } from '@emotion/react';
+import Spinner from '../Spinner';
 
 type ButtonProps = {
 	text: string;
@@ -22,6 +23,7 @@ const Button = React.memo(
 		disabled = false,
 		...props
 	}: ButtonProps) => {
+		const theme = useTheme();
 		const isMobile = useStore($isMobile);
 		const requestLoading = useStore($requestLoading);
 
@@ -43,9 +45,17 @@ const Button = React.memo(
 				disabled={(disableOnRequestLoading && requestLoading) || disabled}
 				{...props}
 			>
-				<Typography variant={variant} size={size} containerProps={{ placement: 'center' }}>
-					{text}
-				</Typography>
+				{disableOnRequestLoading && requestLoading ? (
+					<Spinner size={40} color={theme.palette.common.white} />
+				) : (
+					<Typography
+						variant={variant}
+						size={size}
+						containerProps={{ placement: 'center' }}
+					>
+						{text}
+					</Typography>
+				)}
 			</Container>
 		);
 	},
@@ -55,7 +65,7 @@ export default Button;
 
 const Container = styled.div<{ isMobile: boolean; disabled: boolean }>`
 	${({ isMobile, disabled }) => css`
-		height: auto;
+		height: 3rem;
 		text-align: center;
 		width: auto;
 		cursor: ${disabled ? 'progress' : 'pointer'};

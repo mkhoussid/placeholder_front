@@ -17,8 +17,9 @@ import Error from './components/Layout/Error';
 import 'src/assets/styles.css';
 import { useNavigateParams } from './hooks';
 import SandboxPage from './pages/Sandbox';
-import { Spinner, Toastr } from './components/ui';
+import { Toastr, Progress } from './components/ui';
 import { Login } from './features/auth/components';
+import SplashScreen from './components/SplashScreen';
 
 const App = React.memo(() => {
 	const { theme } = React.useContext(ThemeContext);
@@ -38,10 +39,11 @@ const App = React.memo(() => {
 
 	return (
 		<EmotionThemeProvider theme={theme}>
-			{GlobalStyles({ theme })}
+			{GlobalStyles()}
 			<Toastr />
+			<Progress />
 			{initLoading ? (
-				<Spinner />
+				<SplashScreen />
 			) : (
 				<Routes>
 					<Route path={uris.ROOT} element={<Layout />}>

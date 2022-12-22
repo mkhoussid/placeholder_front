@@ -33,7 +33,7 @@ export const doLogin = async ({ payload: { email } }: ActionBase<{ email: string
 				doneDataWatcher: ({ user }: { user: Auth.User }) => {
 					setUser({ payload: { user } });
 				},
-				finallyWatcher: (res) => {
+				finallyWatcher: () => {
 					setRequestLoading({ payload: { requestLoading: false } });
 				},
 			},

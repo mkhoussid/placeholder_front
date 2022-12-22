@@ -68,8 +68,9 @@ export const init = async () => {
 		await createAndExecuteEffect({
 			prehandler: async () =>
 				new Promise((res) => {
-					const loadedImages = [];
 					setInitLoading({ payload: { initLoading: true } });
+					setRequestLoading({ payload: { requestLoading: true } });
+					const loadedImages = [];
 					const img = new Image();
 					const img2 = new Image();
 					const img3 = new Image();
@@ -95,6 +96,12 @@ export const init = async () => {
 					url: generateEndpointPath({ path: apis.INIT.ROOT }),
 					method: EMethodTypes.POST,
 					body: createPostBody({ language: window.navigator.language }),
+					onUploadProgress: (event) => {
+						console.log('event,', event);
+					},
+					onDownloadProgress: (event) => {
+						console.log('event222,', event);
+					},
 				}),
 			watchers: {
 				doneDataWatcher: ({
@@ -107,8 +114,8 @@ export const init = async () => {
 					setUser({ payload: { user } });
 					setDictionary({ payload: { dictionary } });
 				},
-				finallyWatcher: (res) => {
-					console.log('res', res);
+				finallyWatcher: () => {
+					setRequestLoading({ payload: { requestLoading: false } });
 				},
 			},
 		});

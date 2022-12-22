@@ -20,6 +20,8 @@ type TTimeout = AxiosRequestConfig['timeout'];
 
 type TOnUploadProgress = AxiosRequestConfig['onUploadProgress'];
 
+type TOnDownloadProgress = AxiosRequestConfig['onDownloadProgress'];
+
 export type TRequest = {
 	url: string;
 	method?: EMethodTypes;
@@ -28,6 +30,7 @@ export type TRequest = {
 	timeout?: TTimeout;
 	headers?: THeaders;
 	onUploadProgress?: TOnUploadProgress;
+	onDownloadProgress?: TOnDownloadProgress;
 	baseURL?: string;
 	responseType?: AxiosRequestConfig['responseType'];
 	withCredentials?: AxiosRequestConfig['withCredentials'];
@@ -45,6 +48,7 @@ export const httpClient = async <Result>({
 		'content-type': 'application/json',
 	},
 	onUploadProgress = () => undefined,
+	onDownloadProgress = () => undefined,
 	baseURL = import.meta.env.VITE_API_ENDPOINT,
 	responseType,
 	withCredentials = true,
@@ -74,6 +78,7 @@ export const httpClient = async <Result>({
 			onUploadProgress,
 			withCredentials,
 			responseType,
+			onDownloadProgress,
 		})
 	).data;
 };

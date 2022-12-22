@@ -1,7 +1,6 @@
-import { css, Global, Theme } from '@emotion/react';
-import { hexToRgba } from 'src/utils';
+import { css, Global } from '@emotion/react';
 
-export default ({ theme }: { theme: Theme }) => (
+export default () => (
 	<Global
 		styles={css`
 			* {
@@ -26,75 +25,6 @@ export default ({ theme }: { theme: Theme }) => (
 			}
 			input[data-autocompleted] {
 				background-color: transparent !important;
-			}
-			.rrt-warning {
-				&&& {
-					box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
-					${theme.palette.type === 'light'
-						? `
-						background: linear-gradient(125deg, ${hexToRgba('#a951ed', 0.6)}, ${hexToRgba('#02ccba', 0.4)});
-					`
-						: `
-						background-color: rgba(0, 0, 0, 0.7);
-					`}
-					backdrop-filter: blur(10px);
-					.rrt-progress-container {
-						margin-left: 0rem;
-					}
-				}
-			}
-			.close-toastr {
-				&&&& {
-					color: #ffffff;
-					opacity: 1;
-					margin-right: 1rem;
-				}
-			}
-			.rrt-info {
-				&&& {
-					box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
-					${theme.palette.type === 'light'
-						? `
-						background: linear-gradient(125deg, ${hexToRgba('#a951ed', 0.6)}, ${hexToRgba('#02ccba', 0.4)});
-					`
-						: `
-						background-color: rgba(0, 0, 0, 0.7);
-					`}
-					backdrop-filter: blur(10px);
-				}
-			}
-			.rrt-success {
-				&&& {
-					box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
-					${theme.palette.type === 'light'
-						? `
-						background: linear-gradient(125deg, ${hexToRgba('#a951ed', 0.6)}, ${hexToRgba('#02ccba', 0.4)});
-					`
-						: `
-						background-color: rgba(0, 0, 0, 0.7);
-					`}
-					backdrop-filter: blur(10px);
-				}
-			}
-			.rrt-error {
-				&&& {
-					box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
-					${theme.palette.type === 'light'
-						? `
-						background: linear-gradient(125deg, ${hexToRgba('#a951ed', 0.6)}, ${hexToRgba('#02ccba', 0.4)});
-					`
-						: `
-						background-color: rgba(0, 0, 0, 0.7);
-					`}
-					backdrop-filter: blur(10px);
-				}
-			}
-
-			.rrt-middle-container {
-				&&& {
-					// padding: 2rem 5rem;
-					margin: 0rem 5rem;
-				}
 			}
 		`}
 	/>
