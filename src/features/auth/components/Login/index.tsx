@@ -1,21 +1,15 @@
 import * as React from 'react';
 import styled from '@emotion/styled';
-import { css, Theme } from '@emotion/react';
-import { Button, FlexContainer, TextField, Typography } from 'src/components/ui';
-import { ETypographySize, ETypographyVariant } from 'src/components/ui/Typography';
+import { css } from '@emotion/react';
+import { FlexContainer } from 'src/components/ui';
 import { useStore } from 'effector-react';
-import { $dictionary } from 'src/features/core/effector/store';
-import { $authEmailValue } from 'src/features/auth/effector/store';
-import { EmailIcon, Icon, KeyIcon } from 'src/assets/icons';
-import { setAuthEmailValue } from '../../effector/actions';
-import { doLogin } from 'src/features/auth/effector/actions';
+import { $isLoginSelectionScreen } from 'src/features/auth/effector/store';
 import { setLayout } from 'src/features/core/effector/actions';
+import LoginScreen from './LoginScreen';
+import CodeScreen from './CodeScreen';
 
 const Login = React.memo(() => {
-	const [isLoginMode, setIsLoginMode] = React.useState(true);
-
-	const dictionary = useStore($dictionary);
-	const authEmailValue = useStore($authEmailValue);
+	const isLoginSelectionScreen = useStore($isLoginSelectionScreen);
 
 	React.useEffect(() => {
 		setLayout({ payload: { layout: { visibility: { header: true, footer: false } } } });
@@ -25,46 +19,15 @@ const Login = React.memo(() => {
 		};
 	}, []);
 
-	const handleAuthInputChange = React.useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-		setAuthEmailValue({
-			payload: {
-				authEmailValue: e.target.value,
-			},
-		});
-	}, []);
-
-	const handleLogin = React.useCallback(() => {
-		doLogin({ payload: { email: authEmailValue } });
-	}, [authEmailValue]);
-
-	if (!dictionary) return null;
-
 	return (
 		<Container placement='center'>
-			<FormContainer placement='center' isLoginMode={isLoginMode}>
+			<FormContainer placement='center' isLoginSelectionScreen={isLoginSelectionScreen}>
 				<Front>
-					<Typography
-						variant={ETypographyVariant.WHITE}
-						size={ETypographySize.XXL}
-						gutterBottom
-					>
-						{dictionary.AUTH_FORM.LOGIN}
-					</Typography>
-					<TextField
-						name={dictionary.FIELDS.EMAIL.NAME}
-						placeholder={dictionary.FIELDS.EMAIL.PLACEHOLDER}
-						adornmentContent={<Icon icon={EmailIcon} disabledButton />}
-						value={authEmailValue}
-						onChange={handleAuthInputChange}
-						gutterBottom
-					/>
-					<Button
-						text={dictionary.AUTH_FORM.SUBMIT}
-						onClick={handleLogin}
-						disableOnRequestLoading
-					/>
+					<LoginScreen />
 				</Front>
-				<Back>I'm the back!</Back>
+				<Back>
+					<CodeScreen isLoginSelectionScreen={isLoginSelectionScreen} />
+				</Back>
 			</FormContainer>
 		</Container>
 	);
@@ -112,8 +75,8 @@ const Back = styled(Face)`
 	`}
 `;
 
-const FormContainer = styled(FlexContainer)<{ isLoginMode: boolean }>`
-	${({ isLoginMode }) => `
+const FormContainer = styled(FlexContainer)<{ isLoginSelectionScreen: boolean }>`
+	${({ isLoginSelectionScreen }) => `
         position: relative;
         width: 500px;
         transform-style: preserve-3d;
@@ -121,10 +84,10 @@ const FormContainer = styled(FlexContainer)<{ isLoginMode: boolean }>`
         height: 100%;
 
         ${Front} {
-            transform: rotateY(${isLoginMode ? '0' : '180'}deg);
+            transform: rotateY(${isLoginSelectionScreen ? '0' : '180'}deg);
         }
         ${Back} {
-            transform: rotateY(${isLoginMode ? '180' : '360'}deg);
+            transform: rotateY(${isLoginSelectionScreen ? '180' : '360'}deg);
         }
     `}
 `;

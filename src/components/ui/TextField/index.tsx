@@ -13,6 +13,7 @@ type TextFieldProps = {
 	value: string;
 	disabled?: boolean;
 	disableOnRequestLoading?: boolean;
+	getIsError?: ({ inputErrors, name, value }: { inputErrors: string[]; name: string; value: string }) => boolean;
 } & Omit<React.InputHTMLAttributes<HTMLInputElement>, 'name'>;
 
 const TextField = React.memo(
@@ -25,6 +26,8 @@ const TextField = React.memo(
 		disabled,
 		containerProps = {},
 		disableOnRequestLoading,
+		value,
+		getIsError,
 		...props
 	}: TextFieldProps) => {
 		const inputRef = React.useRef<HTMLInputElement>(null);
@@ -38,6 +41,14 @@ const TextField = React.memo(
 		const handleAdornmentClick = React.useCallback(() => {
 			inputRef.current?.focus();
 		}, []);
+
+		const handleIsError = React.useCallback(() => {
+			if (getIsError) {
+				return getIsError({ inputErrors, name, value });
+			} else {
+				return inputErrors.includes(name.split('_')[0]);
+			}
+		}, [getIsError, inputErrors, value]);
 
 		const adornment = adornmentContent ? (
 			<AdornmentContent
@@ -57,7 +68,8 @@ const TextField = React.memo(
 					name={name}
 					className={className}
 					disabled={(disableOnRequestLoading && requestLoading) || disabled}
-					error={inputErrors.includes(name.split('_')[0])}
+					error={handleIsError()}
+					value={value}
 					{...props}
 				/>
 				{adornmentPlacement === 'right' && adornment}

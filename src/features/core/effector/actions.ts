@@ -96,12 +96,6 @@ export const init = async () => {
 					url: generateEndpointPath({ path: apis.INIT.ROOT }),
 					method: EMethodTypes.POST,
 					body: createPostBody({ language: window.navigator.language }),
-					onUploadProgress: (event) => {
-						console.log('event,', event);
-					},
-					onDownloadProgress: (event) => {
-						console.log('event222,', event);
-					},
 				}),
 			watchers: {
 				doneDataWatcher: ({

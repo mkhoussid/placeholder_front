@@ -24,7 +24,7 @@ export namespace Core {
 
 	type TextFieldNames = {
 		EMAIL: TextFieldName;
-		PASSWORD: TextFieldName;
+		AUTH_CODE: TextFieldName;
 	};
 
 	type Translations = {
@@ -41,6 +41,7 @@ export namespace Core {
 		AUTH_FORM: {
 			LOGIN: string;
 			SUBMIT: string;
+			ENTER_CODE: string;
 		};
 		FIELDS: TextFieldNames;
 	};

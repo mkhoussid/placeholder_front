@@ -50,10 +50,8 @@ export const createAndExecuteEffect = async ({
 	const isAsync = isAsyncFunction({ func: prehandler });
 
 	if (isAsync) {
-		console.log('entered111');
 		await prehandler();
 	} else {
-		console.log('entered222');
 		prehandler();
 	}
 

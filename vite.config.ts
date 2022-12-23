@@ -1,5 +1,8 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
+import dns from 'dns';
+
+dns.setDefaultResultOrder('verbatim');
 
 export default defineConfig({
 	resolve: {
@@ -21,7 +24,7 @@ export default defineConfig({
 					// [
 					// 	'effector-logger/babel-plugin',
 					// 	{
-					// 		inspector: true,
+					// 		inspector: true,pm
 					// 		effector: {
 					// 			reactSsr: false,
 					// 			factories: [
