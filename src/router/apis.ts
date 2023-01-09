@@ -5,6 +5,7 @@ const apis = {
 	AUTH: {
 		ROOT: 'auth',
 		VERIFY_CODE: 'verify-code',
+		LOGOUT: 'logout',
 	},
 };
 

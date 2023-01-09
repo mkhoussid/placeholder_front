@@ -2,6 +2,14 @@ import { createStore } from 'effector';
 import { TServerErrorMatrixContent } from 'src/constants';
 import { Core } from '../core';
 
+export const $pageAnimationInProgress = createStore(false);
+
+export const $currentPage = createStore(0, {
+	updateFilter: (page) => !$pageAnimationInProgress.getState() && page >= 0,
+});
+
+export const $landingLogoAnimationCompleted = createStore(false);
+
 export const $initLoading = createStore(true);
 
 export const $requestLoading = createStore(false);

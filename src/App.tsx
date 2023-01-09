@@ -18,8 +18,10 @@ import 'src/assets/styles.css';
 import { useNavigateParams } from './hooks';
 import SandboxPage from './pages/Sandbox';
 import { Toastr, Progress } from './components/ui';
-import { Login } from './features/auth/components';
+import { Login, Logout } from './features/auth/components';
 import SplashScreen from './components/SplashScreen';
+
+import 'src/prototypes';
 
 const App = React.memo(() => {
 	const { theme } = React.useContext(ThemeContext);
@@ -31,7 +33,7 @@ const App = React.memo(() => {
 		init();
 	}, []);
 
-	React.useEffect(() => {
+	React.useLayoutEffect(() => {
 		if (serverError) {
 			navigate({ uri: uris.ERROR });
 		}
@@ -49,12 +51,13 @@ const App = React.memo(() => {
 					<Route path={uris.ROOT} element={<Layout />}>
 						<Route path={uris.AUTH.ROOT}>
 							<Route path={uris.AUTH.LOGIN} element={<Login />} />
+							<Route path={uris.AUTH.LOGOUT} element={<Logout />} />
 							<Route
 								path='*'
 								element={
 									<Redirect
 										to={generatePath({
-											uri: uris.AUTH.ROOT,
+											uri: uris.ROOT,
 										})}
 									/>
 								}

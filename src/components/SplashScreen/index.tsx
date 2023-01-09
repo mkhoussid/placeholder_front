@@ -1,11 +1,12 @@
 import * as React from 'react';
 import styled from '@emotion/styled';
-import { Spinner } from 'src/components/ui';
+import { HelixSpinner, Spinner } from 'src/components/ui';
 
 const SplashScreen = React.memo(() => {
 	return (
 		<Container>
-			<Spinner />
+			{/* <Spinner /> */}
+			<HelixSpinner />
 		</Container>
 	);
 });

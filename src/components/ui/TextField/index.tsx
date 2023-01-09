@@ -116,6 +116,8 @@ const Container = styled.div<{ gutterBottom: boolean }>`
                 }
             }
         }
+
+		
     `}
 `;
 
@@ -165,6 +167,10 @@ const Input = styled.input<{ error: boolean }>`
             &:hover {
                 background-color: var(--input-background-hover);
             }
+
+			&::placeholder {
+				font-weight: 100;
+			}
         `}
 `;
 

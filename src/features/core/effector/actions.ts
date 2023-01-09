@@ -14,6 +14,10 @@ import {
 	setInputErrorsEvent,
 	setDictionaryEvent,
 	setLayoutEvent,
+	setLandingLogoAnimationCompletedEvent,
+	setNextPageEvent,
+	setPreviousPageEvent,
+	setPageAnimationInProgressEvent,
 } from './events';
 import { Core } from '../core';
 import { Auth } from 'src/features/auth/auth';
@@ -22,9 +26,30 @@ import { TServerErrorMatrixContent } from 'src/constants';
 import { AxiosError } from 'axios';
 import { ExtendedAxiosError } from 'src/utils/errorHandler';
 import media from 'src/assets/media/cdn';
+import initFullPage from 'src/packages/FullPage';
 
 export const setInitLoading = ({ payload: { initLoading } }: ActionBase<{ initLoading: boolean }>) => {
 	setInitLoadingEvent(initLoading);
+};
+
+export const setPageAnimationInProgress = ({
+	payload: { pageAnimationInProgress },
+}: ActionBase<{ pageAnimationInProgress: boolean }>) => {
+	setPageAnimationInProgressEvent(pageAnimationInProgress);
+};
+
+export const setNextPage = () => {
+	setNextPageEvent();
+};
+
+export const setPreviousPage = () => {
+	setPreviousPageEvent();
+};
+
+export const setLandingLogoAnimationCompleted = ({
+	payload: { landingLogoAnimationCompleted },
+}: ActionBase<{ landingLogoAnimationCompleted: boolean }>) => {
+	setLandingLogoAnimationCompletedEvent(landingLogoAnimationCompleted);
 };
 
 export const setRequestLoading = ({ payload: { requestLoading } }: ActionBase<{ requestLoading: boolean }>) => {
@@ -95,7 +120,6 @@ export const init = async () => {
 				httpClient({
 					url: generateEndpointPath({ path: apis.INIT.ROOT }),
 					method: EMethodTypes.POST,
-					body: createPostBody({ language: window.navigator.language }),
 				}),
 			watchers: {
 				doneDataWatcher: ({
@@ -108,8 +132,53 @@ export const init = async () => {
 					setUser({ payload: { user } });
 					setDictionary({ payload: { dictionary } });
 				},
-				finallyWatcher: () => {
+				finallyWatcher: async () => {
 					setRequestLoading({ payload: { requestLoading: false } });
+					setInitLoading({ payload: { initLoading: false } });
+					initFullPage((scrollPos: any, previousScrollPos: any) => {
+						// TODO
+						if (previousScrollPos > scrollPos) {
+							console.log('going up');
+							setPreviousPage();
+						} else {
+							setNextPage();
+							console.log('going down');
+						}
+
+						// setTimeout(() => {
+						// 	setPageAnimationInProgress({
+						// 		payload: { pageAnimationInProgress: true },
+						// 	});
+
+						// 	setTimeout(() => {
+						// 		setPageAnimationInProgress({
+						// 			payload: { pageAnimationInProgress: false },
+						// 		});
+						// 	}, 3000);
+						// }, 500);
+					});
+				},
+				failDataWatcher: ({ error }) => {
+					if (
+						['ERR_BAD_RESPONSE', 'ERR_NETWORK'].includes(
+							(error as AxiosError)?.code ?? '',
+						)
+					) {
+						setServerError({
+							payload: {
+								serverError: {
+									title:
+										navigator.language === 'ru-RU'
+											? 'Что пошло не так'
+											: 'Something went wrong',
+									details:
+										navigator.language === 'ru-RU'
+											? 'Ошиюка сервера'
+											: 'Server error',
+								},
+							},
+						});
+					}
 				},
 			},
 		});
@@ -121,7 +190,5 @@ export const init = async () => {
 		initSocket();
 	} catch (err) {
 		errorHandler({ payload: { err: err as AxiosError<ExtendedAxiosError> | null } });
-	} finally {
-		setInitLoading({ payload: { initLoading: false } });
 	}
 };

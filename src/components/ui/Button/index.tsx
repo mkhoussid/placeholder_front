@@ -14,51 +14,56 @@ type ButtonProps = {
 	disabled?: boolean;
 } & Omit<React.HTMLAttributes<HTMLDivElement>, 'children'>;
 const Button = React.memo(
-	({
-		text,
-		onClick,
-		variant = ETypographyVariant.WHITE,
-		size = ETypographySize.LG,
-		disableOnRequestLoading,
-		disabled = false,
-		...props
-	}: ButtonProps) => {
-		const theme = useTheme();
-		const isMobile = useStore($isMobile);
-		const requestLoading = useStore($requestLoading);
+	React.forwardRef(
+		(
+			{
+				text,
+				onClick,
+				variant = ETypographyVariant.WHITE,
+				size = ETypographySize.LG,
+				disableOnRequestLoading,
+				disabled = false,
+				...props
+			}: ButtonProps,
+			ref,
+		) => {
+			const theme = useTheme();
+			const isMobile = useStore($isMobile);
+			const requestLoading = useStore($requestLoading);
 
-		const handleClick = React.useCallback(
-			(e: React.MouseEvent<HTMLDivElement>) => {
-				e.stopPropagation();
+			const handleClick = React.useCallback(
+				(e: React.MouseEvent<HTMLDivElement>) => {
+					e.stopPropagation();
 
-				if (requestLoading) return;
+					if (requestLoading) return;
 
-				onClick?.(e);
-			},
-			[onClick, requestLoading],
-		);
+					onClick?.(e);
+				},
+				[onClick, requestLoading],
+			);
 
-		return (
-			<Container
-				onClick={handleClick}
-				isMobile={isMobile}
-				disabled={(disableOnRequestLoading && requestLoading) || disabled}
-				{...props}
-			>
-				{disableOnRequestLoading && requestLoading ? (
-					<Spinner size={40} color={theme.palette.common.white} />
-				) : (
-					<Typography
-						variant={variant}
-						size={size}
-						containerProps={{ placement: 'center' }}
-					>
-						{text}
-					</Typography>
-				)}
-			</Container>
-		);
-	},
+			return (
+				<Container
+					onClick={handleClick}
+					isMobile={isMobile}
+					disabled={(disableOnRequestLoading && requestLoading) || disabled}
+					ref={ref}
+					{...props}
+				>
+					{disableOnRequestLoading && requestLoading ? (
+						<Spinner size={40} color={theme.palette.common.white} />
+					) : (
+						<Typography
+							variant={variant}
+							size={size}
+							placement={'center'}
+							text={text}
+						/>
+					)}
+				</Container>
+			);
+		},
+	),
 );
 
 export default Button;
@@ -72,7 +77,7 @@ const Container = styled.div<{ isMobile: boolean; disabled: boolean }>`
 		color: #fff;
 		transition: all 0.5s;
 		position: relative;
-		padding: ${isMobile ? 1 : 0.5}rem;
+		padding: ${isMobile ? '1' : '0.5'}rem 1rem;
 
 		&:before {
 			content: '';

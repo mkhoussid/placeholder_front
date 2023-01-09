@@ -5,7 +5,8 @@ import { $isToastrExpiring, $toastrContent } from './effector/store';
 import { CloseIcon, Icon } from 'src/assets/icons';
 import { css, keyframes, useTheme } from '@emotion/react';
 import { setToastrContent } from './effector/actions';
-import { useInterval, useTimeout } from 'src/hooks';
+import { useTimeout } from 'src/hooks';
+import Typography, { ETypographySize, ETypographyVariant } from '../Typography';
 
 type ToastrProps = {
 	animationDuration?: number;
@@ -13,15 +14,12 @@ type ToastrProps = {
 };
 const Toastr = React.memo(({ animationSpeedMs = 500, animationDuration = 5000 }: ToastrProps) => {
 	const theme = useTheme();
-	const [showTimeout, setShowTimeout] = React.useState<NodeJS.Timeout>();
 	const [localShow, setLocalShow] = React.useState(false);
 
 	const toastrContent = useStore($toastrContent);
 	const isToastrExpiring = useStore($isToastrExpiring);
 
 	React.useEffect(() => {
-		let autoCloseInterval: NodeJS.Timeout;
-
 		if (toastrContent) {
 			setLocalShow(true);
 		} else {
@@ -39,7 +37,7 @@ const Toastr = React.memo(({ animationSpeedMs = 500, animationDuration = 5000 }:
 				payload: { toastrContent: { title: '', message: '' } },
 			});
 		}, animationSpeedMs);
-	}, [toastrContent, showTimeout]);
+	}, []);
 
 	// TODO, fix interval for some reason
 	useTimeout({ timeoutInMs: animationDuration + animationSpeedMs, cb: handleClose, dependency: toastrContent });
@@ -52,8 +50,16 @@ const Toastr = React.memo(({ animationSpeedMs = 500, animationDuration = 5000 }:
 		<ToastContainer showToastr={localShow} animationSpeedMs={animationSpeedMs}>
 			<Toast>
 				<ToastContent>
-					<ToastrTitle>{toastrContent.title}</ToastrTitle>
-					<ToastrMessage>{toastrContent.message}</ToastrMessage>
+					<ToastrTitle
+						variant={ETypographyVariant.WHITE}
+						size={ETypographySize.XL}
+						text={toastrContent.title}
+					/>
+					<ToastrMessage
+						variant={ETypographyVariant.WHITE}
+						size={ETypographySize.LG}
+						text={toastrContent.message}
+					/>
 				</ToastContent>
 				<Icon onClick={handleClose} icon={CloseIcon} fillColor={theme.palette.common.white} />
 				<ToastProgressBar
@@ -109,7 +115,7 @@ const ToastContainer = styled.div<{ showToastr: boolean; animationSpeedMs: numbe
 	${({ showToastr, animationSpeedMs }) => css`
 		top: 0.5rem;
 		left: 0.5rem;
-		z-index: 10;
+		z-index: 50;
 		transform: translateX(${showToastr ? '0' : '-31rem'});
 		position: fixed;
 		padding: 1rem;
@@ -140,6 +146,8 @@ const Toast = styled.div`
         overflow: hidden;
         cursor: pointer;
         direction: ltr;
+
+
     `}
 `;
 
@@ -173,6 +181,6 @@ const ToastProgressBar = styled.div<{ isToastrExpiring: boolean; animationDurati
 	`}
 `;
 
-const ToastrTitle = styled.div``;
+const ToastrTitle = styled(Typography)``;
 
-const ToastrMessage = styled.div``;
+const ToastrMessage = styled(Typography)``;

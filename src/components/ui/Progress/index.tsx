@@ -55,7 +55,7 @@ const Container = styled.div<{ requestLoading: boolean; loaded: boolean }>`
 		background: ${theme.palette.primary.light};
 		position: fixed;
 		left: 0;
-		top: ${HEADER_HEIGHT_IN_REM}rem;
+		top: ${0 /*HEADER_HEIGHT_IN_REM*/}rem;
 		z-index: 10;
 		animation: ${requestLoading && !loaded
 			? css`

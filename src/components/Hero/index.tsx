@@ -3,6 +3,8 @@ import styled from '@emotion/styled';
 import media from 'src/assets/media/cdn';
 import { generateMediaQueryCss } from 'src/utils';
 import { css, keyframes } from '@emotion/react';
+import { FlexContainer, Typography } from '../ui';
+import { ETypographySize, ETypographyVariant } from '../ui/Typography';
 
 const Hero = React.memo(() => {
 	return (
@@ -13,21 +15,18 @@ const Hero = React.memo(() => {
 				<Wrapper>
 					<Content>
 						<Brand>
-							<LogoContainer>
-								<NewLogoContainer>
-									<LogoImage
-										alt='Website Logo'
-										src={
-											1 + 1 === 2
-												? media[
-														'logo_sitegrass_ru.webp'
-												  ]
-												: media[
-														'logo_sitegrass_en.webp'
-												  ]
-										}
+							<LogoContainer placement='center'>
+								<LogoImage
+									alt='Website Logo'
+									src={media['logo.webp']}
+								/>
+								<TextAnimationContainer>
+									<Typography
+										variant={ETypographyVariant.WHITE}
+										size={ETypographySize.XXXL}
+										text={'Именно для'}
 									/>
-								</NewLogoContainer>
+								</TextAnimationContainer>
 							</LogoContainer>
 							<FogLow>
 								<img alt='fog-low' src={media['fog-low.webp']} />
@@ -98,7 +97,7 @@ const Wrapper = styled.div`
 	position: absolute;
 	top: 50%;
 	left: 50%;
-	z-index: 3;
+	z-index: 2;
 	transform: translate(-50%, -50%);
 	text-align: center;
 	color: #ffffff;
@@ -108,34 +107,22 @@ const Wrapper = styled.div`
 const Content = styled.div``;
 
 const Brand = styled.div`
-	max-width: 730;
 	margin: 0 auto;
 	position: relative;
 	text-align: center;
 	color: #ffffff;
 	display: block;
+	width: 40rem;
 `;
 
-const LogoContainer = styled.div`
-	display: flex;
-	justify-content: center;
-	align-items: center;
+const LogoContainer = styled(FlexContainer)`
 	position: relative;
-	padding: 0;
-	margin: 0;
-	width: auto;
-	height: 8rem;
-`;
-
-const NewLogoContainer = styled.div`
+	flex-direction: column;
 	width: 100%;
-	display: flex;
-	justify-content: center;
 `;
 
 const LogoImage = styled.img`
-	width: 40%;
-	padding-bottom: 10rem;
+	width: 100%;
 `;
 
 const cloudLoop = keyframes`
@@ -198,3 +185,5 @@ const Clouds = styled.div`
 		isMaxWidth: false,
 	})}
 `;
+
+const TextAnimationContainer = styled(FlexContainer)``;

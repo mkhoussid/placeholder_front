@@ -2,6 +2,7 @@ import { isAsyncFunction } from './helpers';
 import { createEffect, createEvent, Event, Store } from 'effector';
 import { Auth } from 'src/features/auth/auth';
 import { EffectWatchers } from 'src/global';
+// import { setServerError } from 'src/features/core/effector/actions';
 
 type TWatchHelper = {
 	name?: string;
@@ -26,12 +27,25 @@ export const watchHelper = ({
 	storeElement.watch(wrapper);
 };
 
-type TEventFactory = {
-	storeElement: Store<any>;
-};
-export const eventFactory = <T>({ storeElement }: TEventFactory): Event<T> => {
+type TEventFactory =
+	| {
+			storeElement?: Store<any>;
+			onHandler?: (state: any, payload: any) => void;
+			resetOn?: Event<void>;
+	  }
+	| undefined;
+export const eventFactory = <T>({ storeElement, resetOn, onHandler: _onHandler }: TEventFactory = {}): Event<T> => {
 	const event = createEvent<T>();
-	storeElement.on(event, (state, payload) => payload);
+
+	const onHandler = (state: T, payload: T) => (_onHandler ? _onHandler(state, payload) : payload);
+
+	if (storeElement) {
+		storeElement.on(event, onHandler);
+
+		if (resetOn) {
+			storeElement.reset(resetOn);
+		}
+	}
 
 	return event;
 };
@@ -55,6 +69,10 @@ export const createAndExecuteEffect = async ({
 		prehandler();
 	}
 
+	// Object.keys(watchers).forEach((watcher) => {
+	// 	effect[watcher].watch(watchers[watcher])
+	// })
+
 	if (watchers.doneWatcher) {
 		effect.done.watch(watchers.doneWatcher);
 	}
@@ -67,15 +85,19 @@ export const createAndExecuteEffect = async ({
 		effect.fail.watch(watchers.failWatcher);
 	}
 
-	if (watchers.failDataWatcher) {
-		effect.fail.watch(watchers.failDataWatcher);
-	}
-
 	if (watchers.finallyWatcher) {
 		effect.finally.watch(watchers.finallyWatcher);
 	}
 
-	prehandler?.();
+	const failWatcher = (err: any) => {
+		if (import.meta.env.DEV) {
+			console.error('Error caught', err);
+		}
+
+		watchers.failDataWatcher?.(err);
+	};
+
+	effect.fail.watch(failWatcher);
 
 	return effect();
 };

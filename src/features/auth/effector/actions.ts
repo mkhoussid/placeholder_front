@@ -6,7 +6,13 @@ import { createPostBody, EMethodTypes, httpClient } from 'src/services/httpClien
 import { createAndExecuteEffect, errorHandler, generateEndpointPath } from 'src/utils';
 import { ExtendedAxiosError } from 'src/utils/errorHandler';
 import { Auth } from '../auth';
-import { setAuthCodeValueEvent, setAuthEmailValueEvent, setIsLoginSelectionScreenEvent, setUserEvent } from './events';
+import {
+	resetAuthPage,
+	setAuthCodeValueEvent,
+	setAuthEmailValueEvent,
+	setIsLoginSelectionScreenEvent,
+	setUserEvent,
+} from './events';
 
 export const setUser = ({ payload: { user } }: ActionBase<{ user: Auth.User }>) => {
 	setUserEvent(user);
@@ -53,9 +59,35 @@ export const doLogin = async ({ payload: { email } }: ActionBase<{ email: string
 	}
 };
 
+export const doLogout = async () => {
+	try {
+		await createAndExecuteEffect({
+			prehandler: () => {
+				setRequestLoading({ payload: { requestLoading: true } });
+				setInputErrors({ payload: { inputErrors: [] } });
+			},
+			handler: async () =>
+				httpClient({
+					url: generateEndpointPath({ path: apis.AUTH.LOGOUT }),
+					method: EMethodTypes.GET,
+				}),
+			watchers: {
+				doneDataWatcher: () => {
+					setUser({ payload: { user: null } });
+				},
+				finallyWatcher: () => {
+					setRequestLoading({ payload: { requestLoading: false } });
+				},
+			},
+		});
+	} catch (err) {
+		errorHandler({ payload: { err: err as AxiosError<ExtendedAxiosError> | null } });
+	}
+};
+
 export const doVerifyCode = async ({
-	payload: { email, authCodeValue },
-}: ActionBase<{ email: string; authCodeValue: string[] }>) => {
+	payload: { email, authCodeValue, onSuccess },
+}: ActionBase<{ email: string; authCodeValue: string[]; onSuccess: () => void }>) => {
 	try {
 		await createAndExecuteEffect({
 			prehandler: () => {
@@ -69,8 +101,13 @@ export const doVerifyCode = async ({
 					body: createPostBody({ email, authCodeValue }),
 				}),
 			watchers: {
-				doneDataWatcher: () => {
-					//
+				doneDataWatcher: ({ user }: { user: Auth.User }) => {
+					onSuccess();
+
+					setTimeout(() => {
+						setUser({ payload: { user } });
+						resetAuthPage();
+					}, 2000);
 				},
 				finallyWatcher: () => {
 					setRequestLoading({ payload: { requestLoading: false } });

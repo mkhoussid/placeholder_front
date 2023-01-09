@@ -11,7 +11,9 @@ export default () => (
 			}
 			html {
 				height: 100%;
-				font-family: 'NotoNormal';
+				// font-family: 'NotoNormal';
+				// font-family: 'OswaldRegular';
+				font-family: 'Poppins';
 			}
 			body {
 				height: 100%;

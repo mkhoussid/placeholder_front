@@ -41,10 +41,8 @@ export const generateMediaQueryCss = ({
 	css: string;
 	query?: number;
 	isMaxWidth?: boolean;
-}) => `
+}) => css`
 	@media (${isMaxWidth ? 'max' : 'min'}-width: ${query}px) {
-		${() => css`
-			${_css}
-		`}
+		${_css}
 	}
 `;

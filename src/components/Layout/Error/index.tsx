@@ -1,28 +1,30 @@
 import * as React from 'react';
 import styled from '@emotion/styled';
-import { Button, FlexContainer, Image, Typography } from 'src/components/ui';
-import { TServerErrorMatrixContent } from 'src/constants';
+import { Button, FlexContainer, Typography } from 'src/components/ui';
 import { ETypographySize, ETypographyVariant } from 'src/components/ui/Typography';
 import { $dictionary, $serverError } from 'src/features/core/effector/store';
 import { useStore } from 'effector-react';
-import { useNavigateParams } from 'src/hooks';
+import { useMediaQuery, useNavigateParams } from 'src/hooks';
 import { uris, Redirect } from 'src/router';
 import { setServerError } from 'src/features/core/effector/actions';
-import { cdn } from 'src/assets/media';
+import AnimatedCup from './AnimatedCup';
 
 const Error = React.memo(() => {
 	const serverError = useStore($serverError);
 	const dictionary = useStore($dictionary);
 	const navigate = useNavigateParams();
+	const isMobileQueryMatch = useMediaQuery(`(max-width: ${import.meta.env.VITE_MAX_WIDTH}px)`);
 
 	const handleNavigateToHome = React.useCallback(() => {
 		navigate({ uri: uris.ROOT });
 		setServerError({ payload: { serverError: null } });
 	}, []);
 
-	if (!dictionary) {
-		return null;
-	}
+	const handleRefreshPage = React.useCallback(() => {
+		window.location.href = isMobileQueryMatch
+			? import.meta.env.VITE_CLIENT_PATH_MOBILE
+			: import.meta.env.VITE_CLIENT_PATH_DESKTOP;
+	}, [isMobileQueryMatch]);
 
 	if (!serverError) {
 		return <Redirect to={uris.ROOT} />;
@@ -31,23 +33,31 @@ const Error = React.memo(() => {
 	return (
 		<Container fullHeightAndWidth={false}>
 			<Content>
-				<Image url={cdn['error.png']} />
+				<AnimatedCup />
 				<Typography
-					containerProps={{ placement: 'center' }}
-					size={ETypographySize.XXXXL}
+					size={ETypographySize.XXXL}
 					variant={ETypographyVariant.WHITE}
-				>
-					{serverError.title}
-				</Typography>
+					placement={'center'}
+					text={serverError.title}
+				/>
 				<Typography
-					containerProps={{ placement: 'center' }}
 					size={ETypographySize.XXL}
 					variant={ETypographyVariant.WHITE}
 					gutterBottom
-				>
-					{serverError.details}
-				</Typography>
-				<Button text={dictionary.CORE.GO_HOME} onClick={handleNavigateToHome} />
+					placement={'center'}
+					text={serverError.details}
+				/>
+				{dictionary ? (
+					<Button
+						text={navigator.language === 'ru-RU' ? 'На гланую' : 'Back home'}
+						onClick={handleNavigateToHome}
+					/>
+				) : (
+					<Button
+						text={navigator.language === 'ru-RU' ? 'Обновить' : 'Refresh'}
+						onClick={handleRefreshPage}
+					/>
+				)}
 			</Content>
 		</Container>
 	);
@@ -57,9 +67,11 @@ export default Error;
 
 const Container = styled(FlexContainer)`
 	height: 100%;
+	z-index: 10;
 `;
 
 const Content = styled(FlexContainer)`
 	flex-direction: column;
 	height: auto;
+	z-index: 10;
 `;

@@ -34,8 +34,8 @@ const SvgIcon = styled.svg<{ fillColor?: string }>``;
 
 const Container = styled((props: any) => <FlexContainer {...props} />)<{ disabledButton: boolean }>`
 	${({ theme, disabledButton }) => `
-		width: 32px;
-		height: 32px;
+		width: 2rem;
+		height: 2rem;
 		cursor: ${disabledButton ? 'default' : 'pointer'};
 		border-radius: 50%;
 		padding: 0.25rem;

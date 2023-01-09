@@ -7,3 +7,5 @@ export { default as Image } from './Image';
 export { default as Swiper } from './Swiper';
 export { default as Spinner } from './Spinner';
 export { default as Toastr } from './Toastr';
+export { default as HamburgerMenu } from './HamburgerMenu';
+export { default as HelixSpinner } from './HelixSpinner';

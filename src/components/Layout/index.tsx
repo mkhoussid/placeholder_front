@@ -41,6 +41,7 @@ const Wrapper = styled.div<{ isServerError: boolean }>`
 		display: grid;
 		grid-template-rows: auto 1fr auto;
 		background-color: ${theme.palette.background.main};
+		// TODO light mode background: linear-gradient(141deg, #ccc 25%, #eee 40%, #ddd 55%);
 
 		${
 			isServerError
@@ -66,7 +67,7 @@ const Part = styled.div`
 
 const HeaderWrapper = styled(Part)`
 	z-index: 5;
-	height: 5rem;
+	height: 0rem;
 `;
 
 const BodyWrapper = styled(Part)`

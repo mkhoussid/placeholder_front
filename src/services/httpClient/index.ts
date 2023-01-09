@@ -1,5 +1,5 @@
 import axios, { AxiosResponse, AxiosRequestConfig } from 'axios';
-axios.defaults.headers['user-locale'] = window.navigator.language;
+axios.defaults.headers['user-locale'] = import.meta.env.DEV ? import.meta.env.VITE_LANGUAGE : window.navigator.language;
 import { getCancelToken } from './utils';
 
 export * from './utils';
@@ -24,7 +24,7 @@ type TOnDownloadProgress = AxiosRequestConfig['onDownloadProgress'];
 
 export type TRequest = {
 	url: string;
-	method?: EMethodTypes;
+	method: EMethodTypes;
 	params?: TParams;
 	body?: TBody;
 	timeout?: TTimeout;

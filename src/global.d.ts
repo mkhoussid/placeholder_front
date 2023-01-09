@@ -1,3 +1,4 @@
+import { AxiosError } from 'axios';
 import { Auth } from './features/auth/auth';
 
 interface EffectFinallyBase {
@@ -17,7 +18,7 @@ export interface EffectWatchers {
 	doneWatcher?: ({ result, params }: { result: Done; params: Params }) => any;
 	doneDataWatcher?: (payload: any) => any;
 	failWatcher?: ({ error, params }: { error: Fail; params: Params }) => any;
-	failDataWatcher?: (error: { error: Fail }) => any;
+	failDataWatcher?: (failData: { error: AxiosError | Fail; params: Params }) => any;
 	finallyWatcher?: (result: EffectFinallySuccess | EffectFinallyFail) => void;
 }
 

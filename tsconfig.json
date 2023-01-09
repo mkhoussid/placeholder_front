@@ -18,6 +18,6 @@
 		"baseUrl": "./",
 		"types": ["vitest/globals"]
 	},
-	"include": ["src"],
+	"include": ["src", "decs.d.ts"],
 	"references": [{ "path": "./tsconfig.node.json" }]
 }

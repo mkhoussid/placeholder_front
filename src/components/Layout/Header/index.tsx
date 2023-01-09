@@ -1,7 +1,7 @@
 import * as React from 'react';
 import styled from '@emotion/styled';
-import { FlexContainer, Typography } from 'src/components/ui';
-import { Icon, MenuIcon } from 'src/assets/icons';
+import { FlexContainer, HamburgerMenu, Typography } from 'src/components/ui';
+import { Icon } from 'src/assets/icons';
 import { useTheme } from '@emotion/react';
 import { useStore } from 'effector-react';
 import { $user } from 'src/features/auth/effector/store';
@@ -51,8 +51,8 @@ const Header = React.memo(() => {
 
 	return (
 		<Container>
-			<MenuIconStyled icon={MenuIcon} fillColor={theme.palette.common.white} />
-
+			{/* <MenuIconStyled icon={MenuIcon} fillColor={theme.palette.common.white} /> */}
+			<HamburgerMenu />
 			<HeaderLinksLeftContainer placement='start'>
 				{headerLinks.navHeaderLinks.map(({ label, uri, icon }) => (
 					<HeaderLink
@@ -60,9 +60,11 @@ const Header = React.memo(() => {
 						onClick={handleHeaderLinkClick(uri)}
 						isActive={getIsActive({ uri, pathname })}
 					>
-						<Typography variant={ETypographyVariant.WHITE} icon={icon}>
-							{label}
-						</Typography>
+						<Typography
+							variant={ETypographyVariant.WHITE}
+							icon={icon}
+							text={label}
+						/>
 					</HeaderLink>
 				))}
 			</HeaderLinksLeftContainer>
@@ -73,9 +75,11 @@ const Header = React.memo(() => {
 						onClick={handleHeaderLinkClick(uri)}
 						isActive={getIsActive({ uri, pathname })}
 					>
-						<Typography variant={ETypographyVariant.WHITE} icon={icon}>
-							{label}
-						</Typography>
+						<Typography
+							variant={ETypographyVariant.WHITE}
+							icon={icon}
+							text={label}
+						/>
 					</HeaderLink>
 				))}
 			</HeaderLinksRightContainer>
@@ -88,9 +92,13 @@ export default Header;
 const Container = styled(FlexContainer)`
 	height: ${HEADER_HEIGHT_IN_REM}rem;
 	width: 100%;
+	position: fixed;
+	left: 0;
+	top: 0;
+	padding: 2rem 10rem;
 `;
 
-const MenuIconStyled = styled(Icon)``;
+// const MenuIconStyled = styled(Icon)``;
 
 const HeaderLinksRightContainer = styled(FlexContainer)`
 	flex-grow: 1;

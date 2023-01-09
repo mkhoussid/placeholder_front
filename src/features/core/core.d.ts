@@ -29,7 +29,6 @@ export namespace Core {
 
 	type Translations = {
 		CORE: {
-			GO_HOME: string;
 			HEADER: {
 				LOGIN: string;
 				ABOUT: string;
@@ -38,10 +37,19 @@ export namespace Core {
 				HOME: string;
 			};
 		};
+		LANDING: {
+			LOGO_TEXT: string;
+			SUB_TEXT: string;
+			CAROUSEL: {
+				MAIN_TEXT: string;
+				OPTIONS: string[];
+			};
+		};
 		AUTH_FORM: {
 			LOGIN: string;
 			SUBMIT: string;
 			ENTER_CODE: string;
+			WELCOME: string;
 		};
 		FIELDS: TextFieldNames;
 	};

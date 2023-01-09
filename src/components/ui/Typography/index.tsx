@@ -26,18 +26,21 @@ export enum ETypographyVariant {
 
 type TypographyProps = {
 	size?: ETypographySize;
-	containerProps?: TFlexContainer;
+	paragraphProps?: Omit<React.HtmlHTMLAttributes<HTMLParagraphElement>, 'children'>;
 	gutterBottom?: boolean;
 	variant?: ETypographyVariant;
 	icon?: React.ReactNode;
-} & React.HtmlHTMLAttributes<HTMLParagraphElement>;
+	text: string;
+} & React.HtmlHTMLAttributes<HTMLDivElement> &
+	TFlexContainer;
 const Typography = React.memo(
 	({
-		containerProps,
+		paragraphProps,
 		variant = ETypographyVariant.PRIMARY,
 		size = ETypographySize.MD,
 		gutterBottom = false,
 		icon,
+		text,
 		...props
 	}: TypographyProps) => {
 		const isMobile = useStore($isMobile);
@@ -68,7 +71,7 @@ const Typography = React.memo(
 		);
 
 		return (
-			<Container gutterBottom={gutterBottom} {...containerProps}>
+			<Container gutterBottom={gutterBottom} {...props}>
 				{icon && (
 					<Icons.Icon
 						// @ts-ignore
@@ -83,8 +86,10 @@ const Typography = React.memo(
 					variant={variant}
 					typographySizeMap={typographySizeMap}
 					typographyVariantMap={typographyVariantMap}
-					{...props}
-				/>
+					{...paragraphProps}
+				>
+					{text}
+				</Text>
 			</Container>
 		);
 	},
@@ -96,6 +101,7 @@ const Container = styled(FlexContainer)<{ gutterBottom: boolean }>`
 	${({ gutterBottom }) => `
 		margin-bottom: ${gutterBottom ? 1 : 0}rem;
 		text-align: center;
+		overflow: hidden;
 	`}
 `;
 

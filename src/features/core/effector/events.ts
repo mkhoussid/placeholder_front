@@ -11,10 +11,31 @@ import {
 	$dictionary,
 	$inputErrors,
 	$layout,
+	$landingLogoAnimationCompleted,
+	$currentPage,
+	$pageAnimationInProgress,
 } from './store';
 
 export const setInitLoadingEvent = eventFactory<boolean>({
 	storeElement: $initLoading,
+});
+
+export const setPageAnimationInProgressEvent = eventFactory<boolean>({
+	storeElement: $pageAnimationInProgress,
+});
+
+export const setNextPageEvent = eventFactory({
+	storeElement: $currentPage,
+	onHandler: (n) => n + 1,
+});
+
+export const setPreviousPageEvent = eventFactory({
+	storeElement: $currentPage,
+	onHandler: (n) => n - 1,
+});
+
+export const setLandingLogoAnimationCompletedEvent = eventFactory<boolean>({
+	storeElement: $landingLogoAnimationCompleted,
 });
 
 export const setRequestLoadingEvent = eventFactory<boolean>({
@@ -55,6 +76,23 @@ export const setDictionaryEvent = eventFactory<Core.Dictionary>({
 watchHelper({
 	storeElement: $initLoading,
 	name: '$initLoading',
+});
+
+watchHelper({
+	storeElement: $pageAnimationInProgress,
+	name: '$pageAnimationInProgress',
+	print: true,
+});
+
+watchHelper({
+	storeElement: $currentPage,
+	name: '$currentPage',
+	print: true,
+});
+
+watchHelper({
+	storeElement: $landingLogoAnimationCompleted,
+	name: '$landingLogoAnimationCompleted',
 });
 
 watchHelper({

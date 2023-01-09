@@ -3,12 +3,15 @@ import styled from '@emotion/styled';
 import { css } from '@emotion/react';
 import { FlexContainer } from 'src/components/ui';
 import { useStore } from 'effector-react';
-import { $isLoginSelectionScreen } from 'src/features/auth/effector/store';
+import { $isLoginSelectionScreen, $user } from 'src/features/auth/effector/store';
 import { setLayout } from 'src/features/core/effector/actions';
 import LoginScreen from './LoginScreen';
 import CodeScreen from './CodeScreen';
+import { Redirect, uris } from 'src/router';
+import BackgroundBubbles from './BackgroundBubbles';
 
 const Login = React.memo(() => {
+	const user = useStore($user);
 	const isLoginSelectionScreen = useStore($isLoginSelectionScreen);
 
 	React.useEffect(() => {
@@ -19,8 +22,13 @@ const Login = React.memo(() => {
 		};
 	}, []);
 
+	if (user) {
+		return <Redirect to={uris.ROOT} />;
+	}
+
 	return (
 		<Container placement='center'>
+			<BackgroundBubbles />
 			<FormContainer placement='center' isLoginSelectionScreen={isLoginSelectionScreen}>
 				<Front>
 					<LoginScreen />
@@ -39,6 +47,7 @@ const Container = styled(FlexContainer)`
 	height: 100%;
 	position: relative;
 	overflow: hidden;
+	// background: -webkit-linear-gradient(top left, #50a3a2 0%, #53e3a6 100%);
 
 	&:before {
 		content: '';
@@ -70,9 +79,7 @@ const Face = styled.div`
 const Front = styled(Face)``;
 
 const Back = styled(Face)`
-	${({ theme }) => css`
-		transform: rotateY(180deg);
-	`}
+	transform: rotateY(180deg);
 `;
 
 const FormContainer = styled(FlexContainer)<{ isLoginSelectionScreen: boolean }>`
@@ -82,6 +89,7 @@ const FormContainer = styled(FlexContainer)<{ isLoginSelectionScreen: boolean }>
         transform-style: preserve-3d;
         perspective: 750px;
         height: 100%;
+		z-index: 2;
 
         ${Front} {
             transform: rotateY(${isLoginSelectionScreen ? '0' : '180'}deg);

@@ -28,9 +28,12 @@ const LoginScreen = React.memo(() => {
 
 	return (
 		<Container>
-			<Typography variant={ETypographyVariant.WHITE} size={ETypographySize.XXL} gutterBottom>
-				{dictionary.AUTH_FORM.LOGIN}
-			</Typography>
+			<Typography
+				variant={ETypographyVariant.WHITE}
+				size={ETypographySize.XXL}
+				gutterBottom
+				text={dictionary.AUTH_FORM.LOGIN}
+			/>
 			<TextField
 				name={dictionary.FIELDS.EMAIL.NAME}
 				placeholder={dictionary.FIELDS.EMAIL.PLACEHOLDER}
